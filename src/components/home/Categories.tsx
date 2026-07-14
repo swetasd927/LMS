@@ -4,7 +4,10 @@ const categories = [
   "Design",
   "Business",
   "Marketing",
-  "CSIT Entrance",
+  "Robotics",
+  "DevOps",
+  "System Design",
+  "Cybersecurity"
 ];
 
 const Categories =() => {
