@@ -1,9 +1,11 @@
+import { Button } from "antd";
+
 function App() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100">
-      <h1 className="text-5xl font-bold text-indigo-600">
+    <div className="flex min-h-screen items-center justify-center">
+      <Button type="primary">
         LMS Platform
-      </h1>
+      </Button>
     </div>
   );
 }
