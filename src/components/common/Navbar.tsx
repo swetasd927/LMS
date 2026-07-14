@@ -1,8 +1,10 @@
+import { Button, Input } from "antd";
 import { Link } from "react-router-dom";
+import { Search } from "lucide-react";
 
-function Navbar() {
+const Navbar = () => {
   return (
-    <nav className="border-b bg-white">
+    <nav className="sticky top-0 z-50 border-b bg-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <Link
           to="/"
@@ -11,14 +13,34 @@ function Navbar() {
           LMS
         </Link>
 
-        <div className="flex gap-6">
-          <Link to="/courses">Courses</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+        <div className="hidden w-100 lg:block">
+          <Input
+            size="large"
+            prefix={<Search size={18} />}
+            placeholder="Search courses..."
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Button type="text">
+            Become Instructor
+          </Button>
+
+          <Link to="/login">
+            <Button>
+              Login
+            </Button>
+          </Link>
+
+          <Link to="/register">
+            <Button type="primary">
+              Register
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
