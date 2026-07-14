@@ -1,75 +1,156 @@
-# React + TypeScript + Vite
+# LMS Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Learning Management System (LMS) inspired by platforms like Udemy and Coursera. The platform allows students to discover and learn courses, instructors to create and manage educational content, and administrators to manage the overall system.
 
-Currently, two official plugins are available:
+## Phase 1 Goal
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Build a functional LMS MVP where:
 
-## React Compiler
+* Students can browse, enroll, and learn courses
+* Instructors can create and publish courses
+* Admins can manage users, categories, and course approvals
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+### Authentication
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* User registration and login
+* Forgot password functionality
+* Role Based Access Control (Student, Instructor, Admin)
+* Protected routes
+* Profile management
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Public Website
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Landing page with featured courses and categories
+* Course listing with search, filters, sorting, and pagination
+* Course detail page with curriculum preview, instructor information, reviews, and related courses
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Student Module
 
+* Student dashboard
+* My Learning page
+* Course progress tracking
+* Lesson completion tracking
+* Course reviews and ratings
+
+### Instructor Module
+
+* Instructor dashboard
+* Course creation and management
+* Curriculum builder with sections and lessons
+* Upload videos and learning resources
+* Student enrollment and progress monitoring
+
+### Admin Module
+
+* User management
+* Course approval system
+* Category management
+* Platform statistics dashboard
+
+## Core Modules
+
+* Authentication System
+* Course Management System
+* Enrollment System
+* Progress Tracking System
+* Review System
+* Notification System
+* File Upload System
+
+## Course Workflow
+
+```txt
+Admin creates categories
+        ↓
+Instructor creates course
+        ↓
+Course enters pending state
+        ↓
+Admin approves course
+        ↓
+Course becomes publicly available
+        ↓
+Student enrolls
+        ↓
+Student watches lessons
+        ↓
+Progress is tracked
+        ↓
+Course completed
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Frontend
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router DOM
+* TanStack Query
+* React Hook Form
+* Zod
+* Ant Design
 
-```
+### Backend
+
+* Node.js
+* Express.js
+* TypeScript
+* JWT Authentication
+* Bcrypt
+
+### Database
+
+* PostgreSQL
+* Prisma ORM
+
+### File Storage
+
+* Cloudinary
+
+## Database Entities
+
+* User
+* Role
+* Course
+* Category
+* Section
+* Lesson
+* Enrollment
+* Progress
+* Review
+* Notification
+
+## Development Phases
+
+### Phase 1.1
+
+Authentication, RBAC, and database setup.
+
+### Phase 1.2
+
+Course CRUD, category management, and public pages.
+
+### Phase 1.3
+
+Enrollment system, learning module, and progress tracking.
+
+### Phase 1.4
+
+Instructor dashboard, admin dashboard, and reviews.
+
+## Future Scope
+
+Phase 2 will include:
+
+* AI powered learning assistant
+* Mock tests and quizzes
+* Certificates
+* Discussion forums
+* Subscription plans
+* Live classes
+* Recommendation system
