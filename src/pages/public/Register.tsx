@@ -1,6 +1,40 @@
-import { Button, Input, Select } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Select,
+  message,
+} from "antd";
+import { useNavigate } from "react-router-dom";
+
+interface RegisterFormValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: string;
+}
 
 const Register = () => {
+  const [form] =
+    Form.useForm<RegisterFormValues>();
+
+  const navigate = useNavigate();
+
+  const onFinish = (
+    values: RegisterFormValues
+  ) => {
+    console.log(values);
+
+    message.success(
+      "Registration Successful!"
+    );
+
+    form.resetFields();
+
+    navigate("/login");
+  };
+
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-6 py-12">
       <div className="w-full max-w-md rounded-2xl border bg-white p-8 shadow-sm">
@@ -12,51 +46,149 @@ const Register = () => {
           Start your learning journey today.
         </p>
 
-        <div className="space-y-4">
-          <Input
-            size="large"
-            placeholder="Full Name"
-          />
-
-          <Input
-            size="large"
-            placeholder="Email Address"
-          />
-
-          <Input.Password
-            size="large"
-            placeholder="Password"
-          />
-
-          <Input.Password
-            size="large"
-            placeholder="Confirm Password"
-          />
-
-          <Select
-            size="large"
-            className="w-full"
-            placeholder="Select Role"
-            options={[
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+        >
+          <Form.Item
+            label="Full Name"
+            name="name"
+            rules={[
               {
-                value: "student",
-                label: "Student",
+                required: true,
+                message:
+                  "Please enter your full name",
               },
               {
-                value: "instructor",
-                label: "Instructor",
+                min: 3,
+                message:
+                  "Name must be at least 3 characters",
               },
             ]}
-          />
+          >
+            <Input
+              size="large"
+              placeholder="Full Name"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message:
+                  "Please enter your email",
+              },
+              {
+                type: "email",
+                message:
+                  "Please enter a valid email",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              placeholder="Email Address"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message:
+                  "Please enter your password",
+              },
+              {
+                min: 6,
+                message:
+                  "Password must be at least 6 characters",
+              },
+            ]}
+          >
+            <Input.Password
+              size="large"
+              placeholder="Password"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Confirm Password"
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              {
+                required: true,
+                message:
+                  "Please confirm your password",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (
+                    !value ||
+                    getFieldValue(
+                      "password"
+                    ) === value
+                  ) {
+                    return Promise.resolve();
+                  }
+
+                  return Promise.reject(
+                    new Error(
+                      "Passwords do not match"
+                    )
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              size="large"
+              placeholder="Confirm Password"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Role"
+            name="role"
+            rules={[
+              {
+                required: true,
+                message:
+                  "Please select a role",
+              },
+            ]}
+          >
+            <Select
+              size="large"
+              placeholder="Select Role"
+              options={[
+                {
+                  label: "Student",
+                  value: "student",
+                },
+                {
+                  label: "Instructor",
+                  value: "instructor",
+                },
+              ]}
+            />
+          </Form.Item>
 
           <Button
             type="primary"
+            htmlType="submit"
             size="large"
             className="w-full"
           >
             Register
           </Button>
-        </div>
+        </Form>
       </div>
     </div>
   );
