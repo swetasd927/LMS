@@ -20,6 +20,11 @@ const Home = () => {
                 <CourseCard />
                 <CourseCard />
                 <CourseCard />
+                <CourseCard />
+                <CourseCard />
+                <CourseCard />
+                <CourseCard />
+                
             </div>
         </div>
     </section>
