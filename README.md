@@ -94,36 +94,11 @@ Course completed
 * React Hook Form
 * Zod
 * Ant Design
-
-### Backend
-
-* Node.js
-* Express.js
-* TypeScript
-* JWT Authentication
-* Bcrypt
-
-### Database
-
-* PostgreSQL
-* Prisma ORM
+* Cn, Clsx
 
 ### File Storage
 
 * Cloudinary
-
-## Database Entities
-
-* User
-* Role
-* Course
-* Category
-* Section
-* Lesson
-* Enrollment
-* Progress
-* Review
-* Notification
 
 ## Development Phases
 
