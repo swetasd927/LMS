@@ -26,7 +26,7 @@ const CourseDetails = () => {
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
-    if (!sentinel) return;
+    if(!sentinel) return
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsStuck(!entry.isIntersecting),
