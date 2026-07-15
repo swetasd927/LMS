@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { Collapse } from "antd";
 import {
   Check,
@@ -12,10 +13,29 @@ import {
 } from "lucide-react";
 import { getCourseById } from "../../data/courses.data";
 import StarRating from "../../components/course/starRating";
+import { getCourseStats, getSectionStats } from "../../utils/duration";
 
 const CourseDetails = () => {
   const { id } = useParams<{ id: string }>();
   const course = id ? getCourseById(id) : undefined;
+
+  // All hooks must run unconditionally, before any early return.
+  const [isStuck, setIsStuck] = useState(false);
+  const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { rootMargin: "-96px 0px 0px 0px", threshold: 0 }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [course]);
 
   if (!course) {
     return (
@@ -34,10 +54,9 @@ const CourseDetails = () => {
       )
     : null;
 
-  const totalLectures = course.curriculum.reduce(
-    (sum, section) => sum + section.lectures,
-    0
-  );
+  const stats = getCourseStats(course.curriculum);
+  const allSectionKeys = course.curriculum.map((_, i) => String(i));
+  const allExpanded = activeKeys.length === allSectionKeys.length;
 
   return (
     <div>
@@ -107,21 +126,78 @@ const CourseDetails = () => {
             </section>
 
             <section className="mt-10">
-              <h2 className="mb-1 text-xl font-bold">Course content</h2>
-              <p className="mb-4 text-sm text-gray-500">
-                {course.curriculum.length} sections • {totalLectures} lectures
-                • {course.totalHours}h total
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold">Course content</h2>
+                <button
+                  onClick={() =>
+                    setActiveKeys(allExpanded ? [] : allSectionKeys)
+                  }
+                  className="text-sm font-semibold text-blue-600 hover:underline"
+                >
+                  {allExpanded ? "Collapse all sections" : "Expand all sections"}
+                </button>
+              </div>
+              <p className="mb-4 mt-1 text-sm text-gray-500">
+                {stats.sectionCount} sections • {stats.lectureCount} lectures •{" "}
+                {stats.duration} total length
               </p>
+
               <Collapse
-                items={course.curriculum.map((section, i) => ({
-                  key: i,
-                  label: section.title,
-                  children: (
-                    <p className="text-sm text-gray-500">
-                      {section.lectures} lectures · {section.duration}
-                    </p>
-                  ),
-                }))}
+                activeKey={activeKeys}
+                onChange={(keys) =>
+                  setActiveKeys(Array.isArray(keys) ? keys : [keys])
+                }
+                expandIconPosition="end"
+                items={course.curriculum.map((section, i) => {
+                  const sectionStats = getSectionStats(section);
+                  return {
+                    key: String(i),
+                    label: (
+                      <div className="flex w-full items-center justify-between pr-2">
+                        <span className="font-semibold">{section.title}</span>
+                        <span className="text-xs font-normal text-gray-500">
+                          {sectionStats.lectureCount} lectures •{" "}
+                          {sectionStats.duration}
+                        </span>
+                      </div>
+                    ),
+                    children: (
+                      <ul className="divide-y divide-gray-100">
+                        {section.lectures.map((lecture) => (
+                          <li
+                            key={lecture.id}
+                            className="flex items-center justify-between py-2.5 text-sm"
+                          >
+                            <span className="flex items-center gap-2 text-gray-700">
+                              {lecture.type === "video" ? (
+                                <PlayCircle
+                                  size={16}
+                                  className="shrink-0 text-gray-400"
+                                />
+                              ) : (
+                                <FileText
+                                  size={16}
+                                  className="shrink-0 text-gray-400"
+                                />
+                              )}
+                              {lecture.title}
+                            </span>
+                            <span className="flex items-center gap-3 whitespace-nowrap pl-4">
+                              {lecture.isPreview && (
+                                <span className="cursor-pointer text-xs font-semibold text-purple-700 underline">
+                                  Preview
+                                </span>
+                              )}
+                              <span className="text-xs text-gray-500">
+                                {lecture.duration}
+                              </span>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ),
+                  };
+                })}
               />
             </section>
 
@@ -177,22 +253,30 @@ const CourseDetails = () => {
 
           {/* Sticky purchase card */}
           <div className="order-1 lg:order-2">
+            {/* Sentinel — marks where the card naturally sits before it locks */}
+            <div ref={sentinelRef} />
+
             <div className="sticky top-24 overflow-hidden rounded-lg border border-gray-300 shadow-lg">
-              <div className="relative h-48 w-full">
-                <img
-                  src={course.thumbnail}
-                  alt={course.title}
-                  className="h-full w-full object-cover"
-                />
-                <button
-                  aria-label="Preview this course"
-                  className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors hover:bg-black/30"
-                >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90">
-                    <Play size={22} className="ml-1 fill-[#1c1d1f] text-[#1c1d1f]" />
-                  </span>
-                </button>
-              </div>
+              {!isStuck && (
+                <div className="relative h-48 w-full">
+                  <img
+                    src={course.thumbnail}
+                    alt={course.title}
+                    className="h-full w-full object-cover"
+                  />
+                  <button
+                    aria-label="Preview this course"
+                    className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors hover:bg-black/30"
+                  >
+                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90">
+                      <Play
+                        size={22}
+                        className="ml-1 fill-[#1c1d1f] text-[#1c1d1f]"
+                      />
+                    </span>
+                  </button>
+                </div>
+              )}
 
               <div className="p-6">
                 {discount && (
@@ -236,7 +320,7 @@ const CourseDetails = () => {
                   <ul className="space-y-2 text-sm text-gray-700">
                     <li className="flex items-center gap-2">
                       <PlayCircle size={16} />
-                      {course.totalHours} hours on-demand video
+                      {stats.duration} on-demand video
                     </li>
                     <li className="flex items-center gap-2">
                       <FileText size={16} />

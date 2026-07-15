@@ -19,7 +19,6 @@ export const courses: Course[] = [
     level: "All Levels",
     lastUpdated: "6/2026",
     language: "English",
-    totalHours: 18,
     resourcesCount: 24,
     hasCertificate: true,
     whatYouWillLearn: [
@@ -34,9 +33,39 @@ export const courses: Course[] = [
     ],
     topics: ["React", "JavaScript", "TypeScript", "Frontend Development"],
     curriculum: [
-      { title: "Getting Started", lectures: 5, duration: "45min" },
-      { title: "React Fundamentals", lectures: 12, duration: "3hr 20min" },
-      { title: "State & Hooks", lectures: 9, duration: "2hr 10min" },
+      {
+        title: "Week 1 - Foundations: JavaScript to JSX",
+        lectures: [
+          { id: "1-1", title: "Day 1 - Course Overview and Setting Up Your Dev Environment", duration: "8:12", type: "video", isPreview: true },
+          { id: "1-2", title: "Day 1 - Installing Node, VS Code, and Your First React App", duration: "11:30", type: "video", isPreview: true },
+          { id: "1-3", title: "Day 1 - JSX Syntax and Rendering Your First Component", duration: "9:47", type: "video" },
+          { id: "1-4", title: "Day 2 - Props and Component Composition", duration: "10:05", type: "video" },
+          { id: "1-5", title: "Day 2 - Handling Events and Conditional Rendering", duration: "12:18", type: "video" },
+          { id: "1-6", title: "Day 2 - Hands-On Exercise: Build a Profile Card Component", duration: "6:40", type: "article" },
+        ],
+      },
+      {
+        title: "Week 2 - State, Hooks, and Data Flow",
+        lectures: [
+          { id: "2-1", title: "Day 3 - useState and Managing Local Component State", duration: "13:22", type: "video" },
+          { id: "2-2", title: "Day 3 - useEffect and Handling Side Effects", duration: "14:50", type: "video" },
+          { id: "2-3", title: "Day 4 - Fetching Data From an API with useEffect", duration: "11:15", type: "video" },
+          { id: "2-4", title: "Day 4 - Lifting State Up and Prop Drilling", duration: "9:30", type: "video" },
+          { id: "2-5", title: "Day 5 - Introduction to Context API", duration: "10:44", type: "video" },
+          { id: "2-6", title: "Day 5 - Hands-On Exercise: Build a Theme Switcher", duration: "7:05", type: "article" },
+        ],
+      },
+      {
+        title: "Week 3 - Routing, TypeScript, and Deployment",
+        lectures: [
+          { id: "3-1", title: "Day 6 - Setting Up React Router and Nested Routes", duration: "12:40", type: "video" },
+          { id: "3-2", title: "Day 6 - Protected Routes and Route Guards", duration: "9:58", type: "video" },
+          { id: "3-3", title: "Day 7 - Adding TypeScript to an Existing React Project", duration: "15:20", type: "video" },
+          { id: "3-4", title: "Day 7 - Typing Props, State, and Event Handlers", duration: "13:05", type: "video" },
+          { id: "3-5", title: "Day 8 - Building for Production and Deploying to Vercel", duration: "10:12", type: "video" },
+          { id: "3-6", title: "Day 8 - Capstone Project Walkthrough", duration: "18:30", type: "video" },
+        ],
+      },
     ],
   },
   {
@@ -57,7 +86,6 @@ export const courses: Course[] = [
     level: "Intermediate",
     lastUpdated: "5/2026",
     language: "English",
-    totalHours: 14,
     resourcesCount: 18,
     hasCertificate: true,
     whatYouWillLearn: [
@@ -72,8 +100,39 @@ export const courses: Course[] = [
     ],
     topics: ["Node.js", "Express", "Backend Development", "REST APIs"],
     curriculum: [
-      { title: "Node Basics", lectures: 6, duration: "1hr 05min" },
-      { title: "Building APIs", lectures: 14, duration: "4hr 00min" },
+      {
+        title: "Week 1 - Node.js and Express Fundamentals",
+        lectures: [
+          { id: "1-1", title: "Day 1 - Course Overview and Setting Up Node.js", duration: "7:15", type: "video", isPreview: true },
+          { id: "1-2", title: "Day 1 - Understanding the Event Loop and Node Internals", duration: "12:40", type: "video", isPreview: true },
+          { id: "1-3", title: "Day 1 - Building Your First Express Server", duration: "9:20", type: "video" },
+          { id: "1-4", title: "Day 2 - Routing and Middleware in Express", duration: "11:55", type: "video" },
+          { id: "1-5", title: "Day 2 - Handling Request Bodies and File Uploads", duration: "10:08", type: "video" },
+          { id: "1-6", title: "Day 2 - Hands-On Exercise: Build a Notes API", duration: "8:30", type: "article" },
+        ],
+      },
+      {
+        title: "Week 2 - Databases and Authentication",
+        lectures: [
+          { id: "2-1", title: "Day 3 - Connecting Express to MongoDB with Mongoose", duration: "14:10", type: "video" },
+          { id: "2-2", title: "Day 3 - Schema Design and Data Validation", duration: "11:22", type: "video" },
+          { id: "2-3", title: "Day 4 - Password Hashing and User Registration", duration: "13:05", type: "video" },
+          { id: "2-4", title: "Day 4 - JWT Authentication and Protected Routes", duration: "15:48", type: "video" },
+          { id: "2-5", title: "Day 5 - Role-Based Access Control", duration: "10:30", type: "video" },
+          { id: "2-6", title: "Day 5 - Hands-On Exercise: Secure the Notes API", duration: "9:00", type: "article" },
+        ],
+      },
+      {
+        title: "Week 3 - Testing and Deployment",
+        lectures: [
+          { id: "3-1", title: "Day 6 - Error Handling and Logging Best Practices", duration: "9:45", type: "video" },
+          { id: "3-2", title: "Day 6 - Writing Tests with Jest and Supertest", duration: "13:15", type: "video" },
+          { id: "3-3", title: "Day 7 - Environment Variables and Configuration", duration: "8:52", type: "video" },
+          { id: "3-4", title: "Day 7 - Deploying to Render and Setting Up CI", duration: "12:00", type: "video" },
+          { id: "3-5", title: "Day 8 - Rate Limiting and API Security Hardening", duration: "11:10", type: "video" },
+          { id: "3-6", title: "Day 8 - Capstone Project Walkthrough", duration: "16:40", type: "video" },
+        ],
+      },
     ],
   },
   {
@@ -94,7 +153,6 @@ export const courses: Course[] = [
     level: "Beginner",
     lastUpdated: "7/2026",
     language: "English",
-    totalHours: 22,
     resourcesCount: 30,
     hasCertificate: true,
     whatYouWillLearn: [
@@ -103,11 +161,45 @@ export const courses: Course[] = [
       "Build ML models with scikit-learn",
       "Work on real-world data science projects",
     ],
-    requirements: ["No prior experience required", "A computer with Python installed (we'll set it up together)"],
+    requirements: [
+      "No prior experience required",
+      "A computer with Python installed (we'll set it up together)",
+    ],
     topics: ["Python", "Data Science", "Machine Learning", "Pandas"],
     curriculum: [
-      { title: "Python Refresher", lectures: 8, duration: "2hr 00min" },
-      { title: "Data Analysis", lectures: 16, duration: "5hr 30min" },
+      {
+        title: "Week 1 - Python and NumPy Foundations",
+        lectures: [
+          { id: "1-1", title: "Day 1 - Course Overview and Setting Up Anaconda", duration: "6:50", type: "video", isPreview: true },
+          { id: "1-2", title: "Day 1 - Python Refresher: Lists, Dicts, and Functions", duration: "14:20", type: "video", isPreview: true },
+          { id: "1-3", title: "Day 1 - Introduction to Jupyter Notebooks", duration: "8:10", type: "video" },
+          { id: "1-4", title: "Day 2 - NumPy Arrays and Vectorized Operations", duration: "13:35", type: "video" },
+          { id: "1-5", title: "Day 2 - Array Indexing, Slicing, and Broadcasting", duration: "11:48", type: "video" },
+          { id: "1-6", title: "Day 2 - Hands-On Exercise: NumPy Warm-Up Problems", duration: "7:20", type: "article" },
+        ],
+      },
+      {
+        title: "Week 2 - Data Analysis with Pandas",
+        lectures: [
+          { id: "2-1", title: "Day 3 - Loading and Exploring Data with Pandas", duration: "12:15", type: "video" },
+          { id: "2-2", title: "Day 3 - Cleaning Messy Data: Nulls, Duplicates, and Types", duration: "15:02", type: "video" },
+          { id: "2-3", title: "Day 4 - GroupBy, Aggregation, and Pivot Tables", duration: "14:40", type: "video" },
+          { id: "2-4", title: "Day 4 - Merging and Joining DataFrames", duration: "10:55", type: "video" },
+          { id: "2-5", title: "Day 5 - Data Visualization with Matplotlib and Seaborn", duration: "13:28", type: "video" },
+          { id: "2-6", title: "Day 5 - Hands-On Exercise: Explore a Real Dataset", duration: "9:40", type: "article" },
+        ],
+      },
+      {
+        title: "Week 3 - Machine Learning with scikit-learn",
+        lectures: [
+          { id: "3-1", title: "Day 6 - Intro to Machine Learning and Train/Test Splits", duration: "11:30", type: "video" },
+          { id: "3-2", title: "Day 6 - Linear Regression from Scratch and with scikit-learn", duration: "16:12", type: "video" },
+          { id: "3-3", title: "Day 7 - Classification with Logistic Regression and Trees", duration: "14:55", type: "video" },
+          { id: "3-4", title: "Day 7 - Model Evaluation: Accuracy, Precision, Recall", duration: "12:20", type: "video" },
+          { id: "3-5", title: "Day 8 - Feature Engineering and Cross-Validation", duration: "13:08", type: "video" },
+          { id: "3-6", title: "Day 8 - Capstone Project Walkthrough", duration: "19:15", type: "video" },
+        ],
+      },
     ],
   },
   {
@@ -127,7 +219,6 @@ export const courses: Course[] = [
     level: "Beginner",
     lastUpdated: "4/2026",
     language: "English",
-    totalHours: 10,
     resourcesCount: 12,
     hasCertificate: true,
     whatYouWillLearn: [
@@ -138,8 +229,28 @@ export const courses: Course[] = [
     requirements: ["No design experience needed", "Free Figma account"],
     topics: ["Figma", "UI Design", "UX Design", "Prototyping"],
     curriculum: [
-      { title: "Design Foundations", lectures: 7, duration: "1hr 40min" },
-      { title: "Prototyping", lectures: 10, duration: "2hr 50min" },
+      {
+        title: "Week 1 - Design Foundations",
+        lectures: [
+          { id: "1-1", title: "Day 1 - Course Overview and Setting Up Figma", duration: "5:40", type: "video", isPreview: true },
+          { id: "1-2", title: "Day 1 - Design Principles: Layout, Contrast, and Hierarchy", duration: "10:25", type: "video", isPreview: true },
+          { id: "1-3", title: "Day 1 - Color Theory and Building a Palette", duration: "8:50", type: "video" },
+          { id: "1-4", title: "Day 2 - Typography Basics for UI Design", duration: "9:15", type: "video" },
+          { id: "1-5", title: "Day 2 - Working with Frames, Auto Layout, and Components", duration: "12:30", type: "video" },
+          { id: "1-6", title: "Day 2 - Hands-On Exercise: Design a Login Screen", duration: "7:00", type: "article" },
+        ],
+      },
+      {
+        title: "Week 2 - Prototyping and Handoff",
+        lectures: [
+          { id: "2-1", title: "Day 3 - Wireframing a Mobile App from Scratch", duration: "13:20", type: "video" },
+          { id: "2-2", title: "Day 3 - Building a Design System with Variants", duration: "14:05", type: "video" },
+          { id: "2-3", title: "Day 4 - Interactive Prototyping and Micro-Interactions", duration: "11:40", type: "video" },
+          { id: "2-4", title: "Day 4 - Usability Testing Your Prototype", duration: "9:55", type: "video" },
+          { id: "2-5", title: "Day 5 - Developer Handoff and Design Specs", duration: "10:18", type: "video" },
+          { id: "2-6", title: "Day 5 - Capstone Project Walkthrough", duration: "15:45", type: "video" },
+        ],
+      },
     ],
   },
 ];

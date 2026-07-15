@@ -4,10 +4,17 @@ export interface Instructor {
   title?: string;
 }
 
+export interface Lecture {
+  id: string;
+  title: string;
+  duration: string; // "mm:ss"
+  type: "video" | "article";
+  isPreview?: boolean;
+}
+
 export interface CurriculumSection {
   title: string;
-  lectures: number;
-  duration: string;
+  lectures: Lecture[];
 }
 
 export interface Course {
@@ -27,7 +34,6 @@ export interface Course {
   level: "Beginner" | "Intermediate" | "Advanced" | "All Levels";
   lastUpdated: string;
   language: string;
-  totalHours: number;
   resourcesCount: number;
   hasCertificate: boolean;
   whatYouWillLearn: string[];
