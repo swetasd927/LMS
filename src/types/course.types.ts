@@ -4,16 +4,24 @@ export interface Instructor {
   title?: string;
 }
 
+export interface Lecture {
+  id: string;
+  title: string;
+  duration: string; // "mm:ss"
+  type: "video" | "article";
+  isPreview?: boolean;
+}
+
 export interface CurriculumSection {
   title: string;
-  lectures: number;
-  duration: string;
+  lectures: Lecture[];
 }
 
 export interface Course {
   id: string;
   title: string;
   subtitle: string;
+  description: string;
   instructor: Instructor;
   thumbnail: string;
   price: number;
@@ -21,11 +29,15 @@ export interface Course {
   rating: number;
   ratingCount: number;
   studentsCount: number;
-  bestSeller?: boolean;
+  bestseller?: boolean;
   category: string;
   level: "Beginner" | "Intermediate" | "Advanced" | "All Levels";
   lastUpdated: string;
   language: string;
+  resourcesCount: number;
+  hasCertificate: boolean;
   whatYouWillLearn: string[];
+  requirements: string[];
+  topics: string[];
   curriculum: CurriculumSection[];
 }
