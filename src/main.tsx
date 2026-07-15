@@ -6,9 +6,12 @@ import { router } from "./app/router";
 
 import "./index.css";
 import "antd/dist/reset.css";
+import AuthProvider from "./features/auth/providers/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </React.StrictMode>,
 );

@@ -1,8 +1,10 @@
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../features/auth/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const onFinish = (values: {
     email: string;
@@ -10,9 +12,36 @@ const Login = () => {
   }) => {
     console.log(values);
 
-    message.success("Login Successful!");
+    const email = values.email;
 
-    navigate("/");
+    if (email === "student@gmail.com") {
+      login(email, "student");
+
+      message.success("Student Login Successful!");
+
+      navigate("/student/dashboard");
+      return;
+    }
+
+    if (email === "instructor@gmail.com") {
+      login(email, "instructor");
+
+      message.success("Instructor Login Successful!");
+
+      navigate("/instructor/dashboard");
+      return;
+    }
+
+    if (email === "admin@gmail.com") {
+      login(email, "admin");
+
+      message.success("Admin Login Successful!");
+
+      navigate("/admin/dashboard");
+      return;
+    }
+
+    message.error("User does not exist");
   };
 
   return (
@@ -37,7 +66,10 @@ const Login = () => {
               },
             ]}
           >
-            <Input size="large" placeholder="Email" />
+            <Input
+              size="large"
+              placeholder="Email"
+            />
           </Form.Item>
 
           <Form.Item

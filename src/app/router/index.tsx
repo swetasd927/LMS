@@ -9,6 +9,9 @@ import Courses from "../../pages/public/Courses";
 import Login from "../../pages/public/Login";
 import Register from "../../pages/public/Register";
 import CourseDetails from "../../pages/public/CourseDetails";
+import StudentDashboard from "../../pages/student/Dashboard";
+import InstructorDashboard from "../../pages/instructor/Dashboard";
+import AdminDashboard from "../../pages/admin/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +37,18 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "/student/dashboard",
+        element: <StudentDashboard />
+      },
+      {
+        path: "/admin/dashboard",
+        element: <InstructorDashboard />
+      },
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />
       }
     ],
   },
