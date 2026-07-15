@@ -14,6 +14,7 @@ export interface Course {
   id: string;
   title: string;
   subtitle: string;
+  description: string;
   instructor: Instructor;
   thumbnail: string;
   price: number;
@@ -21,11 +22,16 @@ export interface Course {
   rating: number;
   ratingCount: number;
   studentsCount: number;
-  bestSeller?: boolean;
+  bestseller?: boolean;
   category: string;
   level: "Beginner" | "Intermediate" | "Advanced" | "All Levels";
   lastUpdated: string;
   language: string;
+  totalHours: number;
+  resourcesCount: number;
+  hasCertificate: boolean;
   whatYouWillLearn: string[];
+  requirements: string[];
+  topics: string[];
   curriculum: CurriculumSection[];
 }
