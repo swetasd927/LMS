@@ -5,7 +5,13 @@ import {
   Select,
   message,
 } from "antd";
-import { useNavigate } from "react-router-dom";
+
+import {
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+
+import { useEffect } from "react";
 
 interface RegisterFormValues {
   name: string;
@@ -15,11 +21,33 @@ interface RegisterFormValues {
   role: string;
 }
 
+interface LocationState {
+  role?: string;
+}
+
 const Register = () => {
+  const navigate =
+    useNavigate();
+
+  const location =
+    useLocation();
+
+  const state =
+    location.state as
+      | LocationState
+      | undefined;
+
   const [form] =
     Form.useForm<RegisterFormValues>();
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (state?.role) {
+      form.setFieldsValue({
+        role:
+          state.role,
+      });
+    }
+  }, [state, form]);
 
   const onFinish = (
     values: RegisterFormValues
@@ -120,15 +148,22 @@ const Register = () => {
           <Form.Item
             label="Confirm Password"
             name="confirmPassword"
-            dependencies={["password"]}
+            dependencies={[
+              "password",
+            ]}
             rules={[
               {
                 required: true,
                 message:
                   "Please confirm your password",
               },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
+              ({
+                getFieldValue,
+              }) => ({
+                validator(
+                  _,
+                  value
+                ) {
                   if (
                     !value ||
                     getFieldValue(
@@ -169,12 +204,16 @@ const Register = () => {
               placeholder="Select Role"
               options={[
                 {
-                  label: "Student",
-                  value: "student",
+                  label:
+                    "Student",
+                  value:
+                    "student",
                 },
                 {
-                  label: "Instructor",
-                  value: "instructor",
+                  label:
+                    "Instructor",
+                  value:
+                    "instructor",
                 },
               ]}
             />
