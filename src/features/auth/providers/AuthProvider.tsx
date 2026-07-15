@@ -17,9 +17,10 @@ const AuthProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] =
-    useState<User | null>(
-      null
-    );
+    useState<User | null>(() => {
+        const storedUser = localStorage.getItem("user");
+        return storedUser ? JSON.parse(storedUser): null
+    });
 
   const login = (
     email: string,
@@ -36,11 +37,15 @@ const AuthProvider = ({
       };
 
     setUser(fakeUser);
+    localStorage.setItem(
+        "user", JSON.stringify(fakeUser)
+    )
   };
 
   const logout =
     () => {
       setUser(null);
+      localStorage.removeItem("user")
     };
 
   return (
