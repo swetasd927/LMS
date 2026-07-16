@@ -5,6 +5,7 @@ A Learning Management System (LMS) inspired by platforms like Udemy and Coursera
 ## Phase 1 Goal
 
 Build a functional LMS MVP where:
+* Main work: course listing with image, description , prices and its course details page
 
 * Students can browse, enroll, and learn courses
 * Instructors can create and publish courses
