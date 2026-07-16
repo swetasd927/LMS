@@ -21,9 +21,9 @@ const Courses = () => {
         );
 
   if (sortBy === "rating") {
-    filteredCourses.sort((a, b) => b.rating - a.rating);
+    filteredCourses.sort((a, b) => b.rating - a.rating);//desc order 4.8 4.4 4.2 
   } else if (sortBy === "price") {
-    filteredCourses.sort((a, b) => a.price - b.price);
+    filteredCourses.sort((a, b) => a.price - b.price);//asc order 300 500 1200
   } else {
     filteredCourses.sort(
       (a, b) =>
