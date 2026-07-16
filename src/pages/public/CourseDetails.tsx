@@ -43,17 +43,33 @@ const CourseDetails = () => {
     }
   };
 
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
+useEffect(() => {
+    const STICKY_OFFSET = 96; // matches `top-24` (6rem = 96px) on the sticky card
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsStuck(!entry.isIntersecting),
-      { rootMargin: "-96px 0px 0px 0px", threshold: 0 },
-    );
+    const checkStuck = () => {
+      const sentinel = sentinelRef.current;
+      if (!sentinel) return;
+      const top = sentinel.getBoundingClientRect().top;
+      setIsStuck(top <= STICKY_OFFSET);
+    };
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        checkStuck();
+        ticking = false;
+      });
+    };
+
+    checkStuck(); 
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, [course]);
 
   if (!course) {
