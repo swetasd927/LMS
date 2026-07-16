@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Select } from "antd";
 import CourseCard from "../../components/course/CourseCard";
 import { courses } from "../../data/courses.data";
@@ -6,28 +6,30 @@ import { courses } from "../../data/courses.data";
 const categories = ["All", ...new Set(courses.map((c) => c.category))];
 
 const Courses = () => {
-  
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [sortBy, setSortBy] = useState<"popular" | "rating" | "price">(
-    "popular"
-  );
+  const [activeCategory, setActiveCategory] =
+    useState("All");
 
-  const filteredCourses = useMemo(() => {
-    let result =
-      activeCategory === "All"
-        ? [...courses]
-        : courses.filter((c) => c.category === activeCategory);
+  const [sortBy, setSortBy] = useState<
+    "popular" | "rating" | "price"
+  >("popular");
 
-    if (sortBy === "rating") {
-      result = result.sort((a, b) => b.rating - a.rating);
-    } else if (sortBy === "price") {
-      result = result.sort((a, b) => a.price - b.price);
-    } else {
-      result = result.sort((a, b) => b.studentsCount - a.studentsCount);
-    }
+  const filteredCourses =
+    activeCategory === "All"
+      ? [...courses]
+      : courses.filter(
+          (c) => c.category === activeCategory
+        );
 
-    return result;
-  }, [activeCategory, sortBy]);
+  if (sortBy === "rating") {
+    filteredCourses.sort((a, b) => b.rating - a.rating);//desc order 4.8 4.4 4.2 
+  } else if (sortBy === "price") {
+    filteredCourses.sort((a, b) => a.price - b.price);//asc order 300 500 1200
+  } else {
+    filteredCourses.sort(
+      (a, b) =>
+        b.studentsCount - a.studentsCount
+    );
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
