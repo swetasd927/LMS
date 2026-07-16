@@ -10,7 +10,13 @@ import {
   FileText,
   Smartphone,
   Award,
+  Percent,
+  Infinity as InfinityIcon,
+  Gift,
+  Share2,
+  CheckCircle2,
 } from "lucide-react";
+
 import { getCourseById } from "../../data/courses.data";
 import StarRating from "../../components/course/starRating";
 import { getCourseStats, getSectionStats } from "../../utils/duration";
@@ -24,13 +30,26 @@ const CourseDetails = () => {
   const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
+  const [purchaseOption, setPurchaseOption] = useState<
+    "individual" | "subscribe"
+  >("individual");
+
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState("");
+
+  const handleApplyCoupon = () => {
+    if (couponInput.trim()) {
+      setAppliedCoupon(couponInput.trim());
+    }
+  };
+
   useEffect(() => {
     const sentinel = sentinelRef.current;
-    if(!sentinel) return
+    if (!sentinel) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsStuck(!entry.isIntersecting),
-      { rootMargin: "-96px 0px 0px 0px", threshold: 0 }
+      { rootMargin: "-96px 0px 0px 0px", threshold: 0 },
     );
 
     observer.observe(sentinel);
@@ -50,7 +69,7 @@ const CourseDetails = () => {
 
   const discount = course.originalPrice
     ? Math.round(
-        ((course.originalPrice - course.price) / course.originalPrice) * 100
+        ((course.originalPrice - course.price) / course.originalPrice) * 100,
       )
     : null;
 
@@ -118,7 +137,10 @@ const CourseDetails = () => {
               <ul className="grid gap-3 sm:grid-cols-2">
                 {course.whatYouWillLearn.map((item, i) => (
                   <li key={i} className="flex gap-2 text-sm">
-                    <Check size={18} className="mt-0.5 shrink-0 text-gray-700" />
+                    <Check
+                      size={18}
+                      className="mt-0.5 shrink-0 text-gray-700"
+                    />
                     {item}
                   </li>
                 ))}
@@ -134,7 +156,9 @@ const CourseDetails = () => {
                   }
                   className="text-sm font-semibold text-blue-600 hover:underline"
                 >
-                  {allExpanded ? "Collapse all sections" : "Expand all sections"}
+                  {allExpanded
+                    ? "Collapse all sections"
+                    : "Expand all sections"}
                 </button>
               </div>
               <p className="mb-4 mt-1 text-sm text-gray-500">
@@ -235,9 +259,7 @@ const CourseDetails = () => {
             </section>
 
             <section className="mt-10">
-              <h2 className="mb-4 text-xl font-bold">
-                Explore related topics
-              </h2>
+              <h2 className="mb-4 text-xl font-bold">Explore related topics</h2>
               <div className="flex flex-wrap gap-2">
                 {course.topics.map((topic) => (
                   <span
@@ -279,39 +301,135 @@ const CourseDetails = () => {
               )}
 
               <div className="p-6">
-                {discount && (
-                  <p className="mb-1 flex items-center gap-1 text-xs font-semibold text-red-600">
-                    <Clock size={14} /> 2 days left at this price!
-                  </p>
-                )}
+                {/* Buy individual course option */}
+                <button
+                  type="button"
+                  onClick={() => setPurchaseOption("individual")}
+                  className="flex w-full items-center gap-3 text-left"
+                >
+                  <span
+                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
+                      purchaseOption === "individual"
+                        ? "border-[#5624d0]"
+                        : "border-gray-400"
+                    }`}
+                  >
+                    {purchaseOption === "individual" && (
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#5624d0]" />
+                    )}
+                  </span>
+                  <span className="text-base text-[#1c1d1f]">
+                    Buy individual course
+                  </span>
+                </button>
 
-                <div className="flex items-center gap-2">
+                <div className="mt-3 flex items-center gap-2">
                   <span className="text-3xl font-bold text-[#1c1d1f]">
                     Rs. {course.price.toLocaleString()}
                   </span>
                   {course.originalPrice && (
-                    <span className="text-lg text-gray-400 line-through">
-                      Rs. {course.originalPrice.toLocaleString()}
-                    </span>
+                    <>
+                      <span className="text-lg text-gray-400 line-through">
+                        Rs. {course.originalPrice.toLocaleString()}
+                      </span>
+                      {discount && (
+                        <span className="text-lg text-[#1c1d1f]">
+                          {discount}% off
+                        </span>
+                      )}
+                    </>
                   )}
                 </div>
+
                 {discount && (
-                  <p className="text-sm text-gray-600">{discount}% off</p>
+                  <p className="mt-1 flex items-center gap-1 text-sm font-semibold text-red-600">
+                    <Clock size={14} /> 2 days left at this price!
+                  </p>
                 )}
 
-                <button className="mt-5 w-full rounded bg-[#1c1d1f] py-3 text-sm font-bold text-white transition-colors hover:bg-black">
-                  Add to Cart
-                </button>
-                <button className="mt-3 w-full rounded border border-[#1c1d1f] py-3 text-sm font-bold text-[#1c1d1f] transition-colors hover:bg-gray-100">
-                  Buy Now
+                <div className="mt-4 space-y-2 border-t border-gray-200 pt-4">
+                  <p className="flex items-center gap-2 text-sm text-[#1c1d1f]">
+                    <Percent size={16} />
+                    30-day money-back guarantee
+                  </p>
+                  <p className="flex items-center gap-2 text-sm text-[#1c1d1f]">
+                    <InfinityIcon size={16} />
+                    Full lifetime access
+                  </p>
+                </div>
+
+                <div className="mt-5 flex flex-col gap-3">
+                  <button className="w-full rounded-full bg-[#5624d0] py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#4a1fb8]">
+                    Add to cart
+                  </button>
+                  <button className="w-full rounded-full border-2 border-[#5624d0] py-3.5 text-sm font-bold text-[#5624d0] transition-colors hover:bg-[#f2edfc]">
+                    Buy now
+                  </button>
+                </div>
+
+                {/* Subscribe and save option */}
+                <button
+                  type="button"
+                  onClick={() => setPurchaseOption("subscribe")}
+                  className="mt-6 flex w-full items-center gap-3 border-t border-gray-200 pt-6 text-left"
+                >
+                  <span
+                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
+                      purchaseOption === "subscribe"
+                        ? "border-[#5624d0]"
+                        : "border-gray-400"
+                    }`}
+                  >
+                    {purchaseOption === "subscribe" && (
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#5624d0]" />
+                    )}
+                  </span>
+                  <span>
+                    <span className="block text-base text-[#1c1d1f]">
+                      Subscribe and save
+                    </span>
+                    <span className="block text-base text-[#1c1d1f]">
+                      From <span className="font-bold">Rs. 800</span> /month
+                    </span>
+                  </span>
                 </button>
 
-                <p className="mt-4 text-center text-xs text-gray-500">
-                  30-Day Money-Back Guarantee
-                </p>
-                <p className="text-center text-xs text-gray-500">
-                  Full Lifetime Access
-                </p>
+                {/* Apply coupon */}
+                <div className="mt-6 border-t border-gray-200 pt-4">
+                  <div className="flex items-center justify-between">
+                    <span className="cursor-pointer text-sm font-semibold text-gray-600 underline">
+                      Apply Coupon
+                    </span>
+                    <div className="flex items-center gap-3 text-gray-600">
+                      <Gift size={18} />
+                      <Share2 size={18} />
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex gap-2">
+                    <input
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value)}
+                      placeholder="Enter Coupon"
+                      className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#5624d0]"
+                    />
+                    <button
+                      onClick={handleApplyCoupon}
+                      className="rounded border border-[#5624d0] px-4 text-sm font-bold text-[#5624d0] hover:bg-[#f2edfc]"
+                    >
+                      Apply
+                    </button>
+                  </div>
+
+                  {appliedCoupon && (
+                    <div className="mt-3 flex items-center justify-between rounded border border-gray-300 px-3 py-2 text-sm">
+                      <span className="text-[#1c1d1f]">{appliedCoupon}</span>
+                      <span className="flex items-center gap-1 font-semibold text-green-700">
+                        <CheckCircle2 size={14} /> Applied!
+                      </span>
+                    </div>
+                  )}
+                </div>
 
                 <div className="mt-6 border-t border-gray-200 pt-4">
                   <p className="mb-2 text-sm font-semibold">
@@ -337,18 +455,6 @@ const CourseDetails = () => {
                       </li>
                     )}
                   </ul>
-                </div>
-
-                <div className="mt-6 border-t border-gray-200 pt-4">
-                  <div className="flex gap-2">
-                    <input
-                      placeholder="Enter Coupon"
-                      className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#1c1d1f]"
-                    />
-                    <button className="rounded border border-gray-300 px-4 text-sm font-semibold hover:bg-gray-50">
-                      Apply
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
