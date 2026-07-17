@@ -35,7 +35,7 @@ export const faqData: FaqCategory[] = [
       {
         question: "What payment methods are supported?",
         answer:
-          "We support major debit/credit cards, UPI, and net banking at checkout.",
+          "We support major debit/credit cards, visa cards and mobile banking at checkout.",
       },
       {
         question: "What is your refund policy?",

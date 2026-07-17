@@ -7,10 +7,11 @@ const footerLinks = {
     { label: "Become an Instructor", to: "/register" },
   ],
   Support: [
-    { label: "Help Center", to: "/" },
-    { label: "Contact Us", to: "/" },
+    { label: "Help Center", to: "/help-center" },
+    { label: "Contact Us", to: "/contact-us" },
   ],
 };
+
 
 const Footer = () => {
   const { ref, inView } = useInView<HTMLElement>();
