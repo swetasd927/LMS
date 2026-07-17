@@ -1,33 +1,16 @@
 import { Link } from "react-router-dom";
 import { useInView } from "../../hooks/useInView";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  LinkedinIcon,
-  XIcon,
-} from "./SocialIcons";
 
 const footerLinks = {
   Platform: [
     { label: "Explore Courses", to: "/courses" },
     { label: "Become an Instructor", to: "/register" },
   ],
-  Company: [
-    { label: "About Us", to: "/" },
-    { label: "Careers", to: "/" },
-  ],
   Support: [
     { label: "Help Center", to: "/" },
     { label: "Contact Us", to: "/" },
   ],
 };
-
-const socialLinks = [
-  { Icon: FacebookIcon, href: "#" },
-  { Icon: XIcon, href: "#" },
-  { Icon: InstagramIcon, href: "#" },
-  { Icon: LinkedinIcon, href: "#" },
-];
 
 const Footer = () => {
   const { ref, inView } = useInView<HTMLElement>();
@@ -46,17 +29,6 @@ const Footer = () => {
             <p className="mt-3 text-sm text-gray-500">
               Learn new skills online with courses from expert instructors.
             </p>
-            <div className="mt-4 flex gap-3">
-              {socialLinks.map((social, i) => (
-                <a
-                  key={i}
-                  href={social.href}
-                  className="rounded-full border border-gray-300 p-2 text-gray-500 transition-colors hover:border-indigo-600 hover:text-indigo-600"
-                >
-                  <social.Icon size={16} />
-                </a>
-              ))}
-            </div>
           </div>
 
           {Object.entries(footerLinks).map(([section, links]) => (
