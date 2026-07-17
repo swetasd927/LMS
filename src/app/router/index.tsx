@@ -7,6 +7,8 @@ import Courses from "../../pages/public/Courses";
 import Login from "../../pages/public/Login";
 import Register from "../../pages/public/Register";
 import CourseDetails from "../../pages/public/CourseDetails";
+import HelpCenter from "../../pages/public/helpCenter";
+import ContactUs from "../../pages/public/ContactUs";
 
 import StudentDashboard from "../../pages/student/Dashboard";
 import InstructorDashboard from "../../pages/instructor/Dashboard";
@@ -38,6 +40,14 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "help-center",
+        element: <HelpCenter />,
+      },
+      {
+        path: "contact-us",
+        element: <ContactUs />,
       },
 
       {

@@ -1,41 +1,36 @@
 import { useState } from "react";
 import { Select } from "antd";
 import CourseCard from "../../components/course/CourseCard";
-import { courses } from "../../data/courses.data";
-
-const categories = ["All", ...new Set(courses.map((c) => c.category))];
+import { useCourses } from "../../hooks/useCourses";
 
 const Courses = () => {
-  const [activeCategory, setActiveCategory] =
-    useState("All");
+  const { courses, loading, error } = useCourses();
 
-  const [sortBy, setSortBy] = useState<
-    "popular" | "rating" | "price"
-  >("popular");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [sortBy, setSortBy] = useState<"popular" | "rating" | "price">(
+    "popular"
+  );
+
+  const categories = ["All", ...new Set(courses.map((c) => c.category))];
 
   const filteredCourses =
     activeCategory === "All"
       ? [...courses]
-      : courses.filter(
-          (c) => c.category === activeCategory
-        );
+      : courses.filter((c) => c.category === activeCategory);
 
   if (sortBy === "rating") {
-    filteredCourses.sort((a, b) => b.rating - a.rating);//desc order 4.8 4.4 4.2 
+    filteredCourses.sort((a, b) => b.rating - a.rating); // desc order 4.8 4.4 4.2
   } else if (sortBy === "price") {
-    filteredCourses.sort((a, b) => a.price - b.price);//asc order 300 500 1200
+    filteredCourses.sort((a, b) => a.price - b.price); // asc order 300 500 1200
   } else {
-    filteredCourses.sort(
-      (a, b) =>
-        b.studentsCount - a.studentsCount
-    );
+    filteredCourses.sort((a, b) => b.studentsCount - a.studentsCount);
   }
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
       <h1 className="mb-2 text-4xl font-bold">Explore Courses</h1>
       <p className="mb-8 text-gray-500">
-        {filteredCourses.length} courses available
+        {loading ? "Loading courses..." : `${filteredCourses.length} courses available`}
       </p>
 
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
@@ -67,11 +62,21 @@ const Courses = () => {
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-4">
-        {filteredCourses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
-      </div>
+      {error && <p className="text-sm text-red-600">{error}</p>}
+
+      {loading ? (
+        <div className="grid gap-6 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="h-64 animate-pulse rounded-lg bg-gray-100" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-6 lg:grid-cols-4">
+          {filteredCourses.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
