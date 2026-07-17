@@ -1,4 +1,4 @@
-import type { CurriculumSection } from "../types/course.types";
+import type { CourseDay, Lecture } from "../types/course.types";
 
 /** "10:44" -> 644 (seconds) */
 export const parseDuration = (duration: string): number => {
@@ -14,9 +14,9 @@ export const formatTotalDuration = (totalSeconds: number): string => {
   return `${hours}h ${minutes}m`;
 };
 
-export const getSectionStats = (section: CurriculumSection) => {
+export const getSectionStats = (section: CourseDay) => {
   const totalSeconds = section.lectures.reduce(
-    (sum, lecture) => sum + parseDuration(lecture.duration),
+    (sum: number, lecture: Lecture) => sum + parseDuration(lecture.duration),
     0
   );
   return {
@@ -25,14 +25,14 @@ export const getSectionStats = (section: CurriculumSection) => {
   };
 };
 
-export const getCourseStats = (curriculum: CurriculumSection[]) => {
-  const allLectures = curriculum.flatMap((s) => s.lectures);
+export const getCourseStats = (days: CourseDay[]) => {
+  const allLectures = days.flatMap((s) => s.lectures);
   const totalSeconds = allLectures.reduce(
-    (sum, lecture) => sum + parseDuration(lecture.duration),
+    (sum: number, lecture: Lecture) => sum + parseDuration(lecture.duration),
     0
   );
   return {
-    sectionCount: curriculum.length,
+    sectionCount: days.length,
     lectureCount: allLectures.length,
     duration: formatTotalDuration(totalSeconds),
   };

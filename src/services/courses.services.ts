@@ -1,20 +1,8 @@
-import type { Course } from "../types/course.types";
-import {
-  courses as staticCourses,
-  getCourseById as getStaticCourseById,
-} from "../data/courses.data";
+import type { CoursesApi } from "../types/api.types";
+import { USE_MOCK_API } from "../config/env";
+import { mockCoursesAdapter } from "./adapters/mock/mockCoursesAdapter";
+import { httpCoursesAdapter } from "./adapters/http/httpCoursesAdapter";
 
-const SIMULATED_DELAY_MS = 300;
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const coursesService = {
-  getAll: async (): Promise<Course[]> => {
-    await delay(SIMULATED_DELAY_MS);
-    return staticCourses;
-  },
-
-  getById: async (id: string): Promise<Course | undefined> => {
-    await delay(SIMULATED_DELAY_MS);
-    return getStaticCourseById(id);
-  },
-};
+// Flip VITE_USE_MOCK_API=false later — nothing else in the app changes.
+export const coursesService: CoursesApi = USE_MOCK_API ? mockCoursesAdapter : httpCoursesAdapter;
+export { mockDb } from "./adapters/mock/db";
