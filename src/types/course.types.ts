@@ -7,15 +7,23 @@ export interface Instructor {
 export interface Lecture {
   id: string;
   title: string;
+  videoUrl: string;
   duration: string; // "mm:ss"
   type: "video" | "article";
   isPreview?: boolean;
+  order: number;
 }
 
-export interface CurriculumSection {
-  title: string;
+export interface CourseDay {
+  id: string;
+  dayNumber: number;
+  title: string; 
+  description?: string;
   lectures: Lecture[];
+  order: number;
 }
+
+export type CourseStatus = "draft" | "published";
 
 export interface Course {
   id: string;
@@ -36,8 +44,35 @@ export interface Course {
   language: string;
   resourcesCount: number;
   hasCertificate: boolean;
+  status: CourseStatus;
   whatYouWillLearn: string[];
   requirements: string[];
   topics: string[];
-  curriculum: CurriculumSection[];
+  days: CourseDay[];
+  createdAt: string;
+  updatedAt: string;
 }
+
+export type CreateCourseInput = Pick<
+  Course,
+  "title" | "subtitle" | "description" | "instructor" | "category" | "level" | "language"
+> &
+  Partial<Omit<Course, "title" | "subtitle" | "description" | "instructor" | "category" | "level" | "language">>;
+
+export type UpdateCourseInput = Partial<Omit<Course, "id" | "days" | "createdAt">>;
+
+export interface CreateDayInput {
+  title: string;
+  dayNumber?: number;
+  description?: string;
+}
+export type UpdateDayInput = Partial<CreateDayInput>;
+
+export interface CreateLectureInput {
+  title: string;
+  videoUrl: string;
+  duration?: string;
+  type?: "video" | "article";
+  isPreview?: boolean;
+}
+export type UpdateLectureInput = Partial<CreateLectureInput>;

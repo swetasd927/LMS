@@ -32,7 +32,7 @@ export const courses: Course[] = [
       "A computer with internet access",
     ],
     topics: ["React", "JavaScript", "TypeScript", "Frontend Development"],
-    curriculum: [
+    days: [
       {
         title: "Week 1 - Foundations: JavaScript to JSX",
         lectures: [
@@ -99,7 +99,7 @@ export const courses: Course[] = [
       "Basic command line familiarity",
     ],
     topics: ["Node.js", "Express", "Backend Development", "REST APIs"],
-    curriculum: [
+    days: [
       {
         title: "Week 1 - Node.js and Express Fundamentals",
         lectures: [
@@ -166,7 +166,7 @@ export const courses: Course[] = [
       "A computer with Python installed (we'll set it up together)",
     ],
     topics: ["Python", "Data Science", "Machine Learning", "Pandas"],
-    curriculum: [
+    days: [
       {
         title: "Week 1 - Python and NumPy Foundations",
         lectures: [
@@ -228,7 +228,7 @@ export const courses: Course[] = [
     ],
     requirements: ["No design experience needed", "Free Figma account"],
     topics: ["Figma", "UI Design", "UX Design", "Prototyping"],
-    curriculum: [
+    days: [
       {
         title: "Week 1 - Design Foundations",
         lectures: [
@@ -253,7 +253,7 @@ export const courses: Course[] = [
       },
     ],
   },
-];
+] as unknown as Course[];
 
 export const getCourseById = (id: string): Course | undefined =>
   courses.find((course) => course.id === id);

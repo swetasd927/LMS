@@ -89,8 +89,8 @@ useEffect(() => {
       )
     : null;
 
-  const stats = getCourseStats(course.curriculum);
-  const allSectionKeys = course.curriculum.map((_, i) => String(i));
+  const stats = getCourseStats(course.days);
+  const allSectionKeys = course.days.map((_, i) => String(i));
   const allExpanded = activeKeys.length === allSectionKeys.length;
 
   return (
@@ -188,7 +188,7 @@ useEffect(() => {
                   setActiveKeys(Array.isArray(keys) ? keys : [keys])
                 }
                 expandIconPosition="end"
-                items={course.curriculum.map((section, i) => {
+                items={course.days.map((section, i) => {
                   const sectionStats = getSectionStats(section);
                   return {
                     key: String(i),

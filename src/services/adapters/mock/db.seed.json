@@ -1,0 +1,40 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "title": "Complete React Bootcamp",
+      "subtitle": "Build production-ready apps with React.",
+      "description": "...",
+      "instructor": { "id": "i1", "name": "Sweta Dahal" },
+      "thumbnail": "https://placehold.co/600x400/6366f1/white?text=React",
+      "price": 999, "rating": 4.7, "ratingCount": 12840, "studentsCount": 58210,
+      "category": "Web Development", "level": "All Levels", "lastUpdated": "6/2026",
+      "language": "English", "resourcesCount": 24, "hasCertificate": true,
+      "status": "published",
+      "whatYouWillLearn": ["Build real-world React apps"],
+      "requirements": ["Basic JS knowledge"],
+      "topics": ["React"],
+      "createdAt": "2026-01-05T09:00:00.000Z",
+      "updatedAt": "2026-06-01T09:00:00.000Z",
+      "days": [
+        {
+          "id": "d1-1",
+          "dayNumber": 1,
+          "title": "Day 1 - Setup",
+          "order": 1,
+          "lectures": [
+            {
+              "id": "l1-1-1",
+              "title": "Installing Node & Your First React App",
+              "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
+              "duration": "11:30",
+              "type": "video",
+              "isPreview": true,
+              "order": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
