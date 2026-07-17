@@ -15,6 +15,8 @@ import InstructorDashboard from "../../pages/instructor/Dashboard";
 import AdminDashboard from "../../pages/admin/Dashboard";
 
 import ProtectedRoute from "../../components/auth/ProtectedRoute";
+import PrivacyPolicy from "../../pages/public/PrivacyPolicy";
+import TermsOfService from "../../pages/public/TermsOfService";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +50,14 @@ export const router = createBrowserRouter([
       {
         path: "contact-us",
         element: <ContactUs />,
+      },
+      {
+        path: "privacy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "terms",
+        element: <TermsOfService />,
       },
 
       {

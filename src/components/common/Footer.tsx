@@ -12,7 +12,6 @@ const footerLinks = {
   ],
 };
 
-
 const Footer = () => {
   const { ref, inView } = useInView<HTMLElement>();
 
@@ -56,8 +55,14 @@ const Footer = () => {
         <div className="mt-10 border-t pt-6 text-center text-sm text-gray-500 sm:flex sm:items-center sm:justify-between sm:text-left">
           <p>LMS Platform © 2026. All rights reserved.</p>
           <div className="mt-2 flex justify-center gap-4 sm:mt-0">
-            <Link to="/" className="hover:text-indigo-600">Privacy</Link>
-            <Link to="/" className="hover:text-indigo-600">Terms</Link>
+            <div className="mt-2 flex justify-center gap-4 sm:mt-0">
+              <Link to="/privacy" className="hover:text-indigo-600">
+                Privacy
+              </Link>
+              <Link to="/terms" className="hover:text-indigo-600">
+                Terms
+              </Link>
+            </div>
           </div>
         </div>
       </div>
