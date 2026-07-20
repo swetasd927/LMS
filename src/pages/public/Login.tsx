@@ -4,40 +4,39 @@ import { useAuth } from "../../features/auth/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
 
-  const onFinish = (values: {
-    email: string;
-    password: string;
-  }) => {
-    console.log(values);
+  const { login, findUser } = useAuth();
 
-    const email = values.email;
+  const onFinish = (values: { email: string; password: string }) => {
+    const { email, password } = values;
 
     if (email === "student@gmail.com") {
       login(email, "student");
-
       message.success("Student Login Successful!");
-
       navigate("/student/dashboard");
       return;
     }
 
     if (email === "instructor@gmail.com") {
       login(email, "instructor");
-
       message.success("Instructor Login Successful!");
-
       navigate("/instructor/dashboard");
       return;
     }
 
     if (email === "admin@gmail.com") {
       login(email, "admin");
-
       message.success("Admin Login Successful!");
-
       navigate("/admin/dashboard");
+      return;
+    }
+
+    const foundUser = findUser(email, password);
+
+    if (foundUser) {
+      login(foundUser.email, foundUser.role);
+      message.success(`Welcome back, ${foundUser.name}!`);
+      navigate(`/${foundUser.role}/dashboard`);
       return;
     }
 
@@ -47,9 +46,7 @@ const Login = () => {
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-6">
       <div className="w-full max-w-md rounded-2xl border bg-white p-8 shadow-sm">
-        <h1 className="mb-6 text-center text-3xl font-bold">
-          Login
-        </h1>
+        <h1 className="mb-6 text-center text-3xl font-bold">Login</h1>
 
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
@@ -66,10 +63,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input
-              size="large"
-              placeholder="Email"
-            />
+            <Input size="large" placeholder="Email" />
           </Form.Item>
 
           <Form.Item
@@ -82,15 +76,11 @@ const Login = () => {
               },
               {
                 min: 6,
-                message:
-                  "Password must be at least 6 characters",
+                message: "Password must be at least 6 characters",
               },
             ]}
           >
-            <Input.Password
-              size="large"
-              placeholder="Password"
-            />
+            <Input.Password size="large" placeholder="Password" />
           </Form.Item>
 
           <Button
