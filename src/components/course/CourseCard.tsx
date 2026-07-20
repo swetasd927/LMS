@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import type { Course } from "../../types/course.types";
 import StarRating from "./starRating";
+import { fadeInUp, hoverLiftTransition } from "../../animations/variants";
 
 interface CourseCardProps {
   course: Course;
 }
 
+const MotionLink = motion.create(Link);
+
 const CourseCard = ({ course }: CourseCardProps) => {
   return (
-    <Link
+    <MotionLink
       to={`/course/${course.id}`}
+      variants={fadeInUp}
+      whileHover={{ y: -6 }}
+      transition={hoverLiftTransition}
       className="block overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow hover:shadow-lg"
     >
       <div className="h-40 w-full overflow-hidden bg-slate-200">
@@ -54,7 +61,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           )}
         </div>
       </div>
-    </Link>
+    </MotionLink>
   );
 };
 

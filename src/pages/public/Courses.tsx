@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Select } from "antd";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import CourseCard from "../../components/course/CourseCard";
 import { useCourses } from "../../hooks/useCourses";
 
@@ -8,8 +9,16 @@ const Courses = () => {
 
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState<"popular" | "rating" | "price">(
-    "popular"
+    "popular",
   );
+
+  const gridVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+    },
+  };
 
   const categories = ["All", ...new Set(courses.map((c) => c.category))];
 
@@ -30,7 +39,9 @@ const Courses = () => {
     <div className="mx-auto max-w-7xl px-6 py-12">
       <h1 className="mb-2 text-4xl font-bold">Explore Courses</h1>
       <p className="mb-8 text-gray-500">
-        {loading ? "Loading courses..." : `${filteredCourses.length} courses available`}
+        {loading
+          ? "Loading courses..."
+          : `${filteredCourses.length} courses available`}
       </p>
 
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
@@ -67,15 +78,26 @@ const Courses = () => {
       {loading ? (
         <div className="grid gap-6 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-64 animate-pulse rounded-lg bg-gray-100" />
+            <div
+              key={i}
+              className="h-64 animate-pulse rounded-lg bg-gray-100"
+            />
           ))}
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-4">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${activeCategory}-${sortBy}`}
+            className="grid gap-6 lg:grid-cols-4"
+            variants={gridVariants}
+            initial="hidden"
+            animate="show"
+          >
+            {filteredCourses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
       )}
     </div>
   );
