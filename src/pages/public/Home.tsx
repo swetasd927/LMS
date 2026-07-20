@@ -3,9 +3,18 @@ import BecomeInstructor from "../../components/home/BecomeInstructor";
 import Categories from "../../components/home/Categories";
 import Hero from "../../components/home/Hero";
 import { useCourses } from "../../hooks/useCourses";
+import { motion, type Variants } from "framer-motion";
 
 const Home = () => {
   const { courses, loading, error } = useCourses();
+
+  const gridVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    },
+  };
 
   return (
     <>
@@ -30,11 +39,17 @@ const Home = () => {
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           {!loading && !error && (
-            <div className="grid gap-6 md:grid-cols-4">
+            <motion.div
+              className="grid gap-6 md:grid-cols-4"
+              variants={gridVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               {courses.map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </section>

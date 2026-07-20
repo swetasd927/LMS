@@ -12,7 +12,7 @@ import AuthProvider from "./features/auth/providers/AuthProvider";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000, // 1 min : it avoids refetch storms against the mock adapter's localStorage
+      staleTime: 60 * 1000, // 1 min: it helps to avoid refetch storms against the mock adapter's localStorage
       retry: 1,
       refetchOnWindowFocus: false,
     },
