@@ -17,6 +17,10 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+import { message } from "antd";
+import { useAuth } from "../../features/auth/hooks/useAuth";
+import { useEnrollmentMutations } from "../../hooks/useEnrollmentMutations";
+
 import StarRating from "../../components/course/starRating";
 import { getCourseStats, getSectionStats } from "../../utils/duration";
 
@@ -25,6 +29,22 @@ import { useCourse } from "../../hooks/useCourse";
 const CourseDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { course, loading } = useCourse(id);
+
+  const { user } = useAuth();
+  const { enrollInCourse, enrolling } = useEnrollmentMutations();
+  const [isEnrolled, setIsEnrolled] = useState(false);
+
+  const handleEnroll = async () => {
+    if (!user) {
+      message.info("Please log in to enroll.");
+      return;
+    }
+    if (!course) return;
+
+    await enrollInCourse(user.id, course.id);
+    setIsEnrolled(true);
+    message.success("Enrolled! Find it in your dashboard.");
+  };
 
   // All hooks must run unconditionally, before any early return.
   const [isStuck, setIsStuck] = useState(false);
@@ -44,7 +64,7 @@ const CourseDetails = () => {
     }
   };
 
-useEffect(() => {
+  useEffect(() => {
     const STICKY_OFFSET = 96; // matches `top-24` (6rem = 96px) on the sticky card
 
     const checkStuck = () => {
@@ -64,7 +84,7 @@ useEffect(() => {
       });
     };
 
-    checkStuck(); 
+    checkStuck();
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll);
     return () => {
@@ -73,8 +93,7 @@ useEffect(() => {
     };
   }, [course]);
 
-
-    if (loading) {
+  if (loading) {
     return (
       <div className="mx-auto max-w-7xl px-6 py-20 text-center text-gray-500">
         Loading course...
@@ -385,11 +404,16 @@ useEffect(() => {
                 </div>
 
                 <div className="mt-5 flex flex-col gap-3">
-                  <button className="w-full rounded-full bg-[#5624d0] py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#4a1fb8]">
-                    Add to cart
-                  </button>
-                  <button className="w-full rounded-full border-2 border-[#5624d0] py-3.5 text-sm font-bold text-[#5624d0] transition-colors hover:bg-[#f2edfc]">
-                    Buy now
+                  <button
+                    onClick={handleEnroll}
+                    disabled={enrolling || isEnrolled}
+                    className="w-full rounded-full bg-[#5624d0] py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#4a1fb8] disabled:opacity-60"
+                  >
+                    {isEnrolled
+                      ? "Enrolled"
+                      : enrolling
+                        ? "Enrolling..."
+                        : "Enroll now"}
                   </button>
                 </div>
 
