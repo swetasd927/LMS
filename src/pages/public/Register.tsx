@@ -1,17 +1,10 @@
-import {
-  Button,
-  Form,
-  Input,
-  Select,
-  message,
-} from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 
-import {
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useEffect } from "react";
+import { useAuth } from "../../features/auth/hooks/useAuth";
+import type { UserRole } from "../../features/auth/types/auth.types";
 
 interface RegisterFormValues {
   name: string;
@@ -26,79 +19,68 @@ interface LocationState {
 }
 
 const Register = () => {
-  const navigate =
-    useNavigate();
+  const { register } = useAuth();
 
-  const location =
-    useLocation();
+  const navigate = useNavigate();
 
-  const state =
-    location.state as
-      | LocationState
-      | undefined;
+  const location = useLocation();
 
-  const [form] =
-    Form.useForm<RegisterFormValues>();
+  const state = location.state as LocationState | undefined;
+
+  const [form] = Form.useForm<RegisterFormValues>();
 
   useEffect(() => {
     if (state?.role) {
       form.setFieldsValue({
-        role:
-          state.role,
+        role: state.role,
       });
     }
   }, [state, form]);
 
-  const onFinish = (
-    values: RegisterFormValues
-  ) => {
-    console.log(values);
+  const onFinish = (values: RegisterFormValues) => {
+    try {
+      register(
+        values.name,
+        values.email,
+        values.password,
+        values.role as UserRole,
+      );
 
-    message.success(
-      "Registration Successful!"
-    );
+      message.success("Registration Successful!");
 
-    form.resetFields();
+      form.resetFields();
 
-    navigate("/login");
+      navigate("/login");
+    } catch (err) {
+      message.error(err instanceof Error ? err.message : "Registration failed");
+    }
   };
 
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-6 py-12">
       <div className="w-full max-w-md rounded-2xl border bg-white p-8 shadow-sm">
-        <h1 className="mb-2 text-center text-3xl font-bold">
-          Create Account
-        </h1>
+        <h1 className="mb-2 text-center text-3xl font-bold">Create Account</h1>
 
         <p className="mb-8 text-center text-gray-500">
           Start your learning journey today.
         </p>
 
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-        >
+        <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Full Name"
             name="name"
             rules={[
               {
                 required: true,
-                message:
-                  "Please enter your full name",
+                message: "Please enter your full name",
               },
               {
                 min: 3,
-                message:
-                  "Name must be at least 3 characters",
+                message: "Name must be at least 3 characters",
               },
             ]}
           >
-            <Input
-              size="large"
-              placeholder="Full Name"
-            />
+            <Input size="large" placeholder="Full Name" />
           </Form.Item>
 
           <Form.Item
@@ -107,20 +89,15 @@ const Register = () => {
             rules={[
               {
                 required: true,
-                message:
-                  "Please enter your email",
+                message: "Please enter your email",
               },
               {
                 type: "email",
-                message:
-                  "Please enter a valid email",
+                message: "Please enter a valid email",
               },
             ]}
           >
-            <Input
-              size="large"
-              placeholder="Email Address"
-            />
+            <Input size="large" placeholder="Email Address" />
           </Form.Item>
 
           <Form.Item
@@ -129,63 +106,38 @@ const Register = () => {
             rules={[
               {
                 required: true,
-                message:
-                  "Please enter your password",
+                message: "Please enter your password",
               },
               {
                 min: 6,
-                message:
-                  "Password must be at least 6 characters",
+                message: "Password must be at least 6 characters",
               },
             ]}
           >
-            <Input.Password
-              size="large"
-              placeholder="Password"
-            />
+            <Input.Password size="large" placeholder="Password" />
           </Form.Item>
 
           <Form.Item
             label="Confirm Password"
             name="confirmPassword"
-            dependencies={[
-              "password",
-            ]}
+            dependencies={["password"]}
             rules={[
               {
                 required: true,
-                message:
-                  "Please confirm your password",
+                message: "Please confirm your password",
               },
-              ({
-                getFieldValue,
-              }) => ({
-                validator(
-                  _,
-                  value
-                ) {
-                  if (
-                    !value ||
-                    getFieldValue(
-                      "password"
-                    ) === value
-                  ) {
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
 
-                  return Promise.reject(
-                    new Error(
-                      "Passwords do not match"
-                    )
-                  );
+                  return Promise.reject(new Error("Passwords do not match"));
                 },
               }),
             ]}
           >
-            <Input.Password
-              size="large"
-              placeholder="Confirm Password"
-            />
+            <Input.Password size="large" placeholder="Confirm Password" />
           </Form.Item>
 
           <Form.Item
@@ -194,8 +146,7 @@ const Register = () => {
             rules={[
               {
                 required: true,
-                message:
-                  "Please select a role",
+                message: "Please select a role",
               },
             ]}
           >
@@ -204,16 +155,12 @@ const Register = () => {
               placeholder="Select Role"
               options={[
                 {
-                  label:
-                    "Student",
-                  value:
-                    "student",
+                  label: "Student",
+                  value: "student",
                 },
                 {
-                  label:
-                    "Instructor",
-                  value:
-                    "instructor",
+                  label: "Instructor",
+                  value: "instructor",
                 },
               ]}
             />

@@ -18,6 +18,8 @@ import ProtectedRoute from "../../components/auth/ProtectedRoute";
 import PrivacyPolicy from "../../pages/public/PrivacyPolicy";
 import TermsOfService from "../../pages/public/TermsOfService";
 
+import CourseEditor from "../../pages/instructor/courseEditor";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -83,6 +85,15 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRole="admin">
             <AdminDashboard />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "instructor/courses/:id",
+        element: (
+          <ProtectedRoute allowedRole="instructor">
+            <CourseEditor />
           </ProtectedRoute>
         ),
       },
