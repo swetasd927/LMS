@@ -22,25 +22,32 @@ const AuthProvider = ({
         return storedUser ? JSON.parse(storedUser): null
     });
 
-  const login = (
-    email: string,
-    role: UserRole
-  ) => {
-    const fakeUser: User =
-      {
-        id:
-          crypto.randomUUID(),
-        name:
-          "Demo User",
-        email,
-        role,
-      };
+const login = (
+  email: string,
+  role: UserRole
+) => {
+  // Stable id derived from email (not crypto.randomUUID()) so a returning
+  // instructor keeps seeing the courses they created in earlier sessions —
+  // a random id per login would silently "orphan" their courses.
+  const displayName = email
+    .split("@")[0]
+    .replace(/[._-]/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 
-    setUser(fakeUser);
-    localStorage.setItem(
-        "user", JSON.stringify(fakeUser)
-    )
-  };
+  const fakeUser: User =
+    {
+      id:
+        `user_${email.toLowerCase()}`,
+      name: displayName || "Demo User",
+      email,
+      role,
+    };
+
+  setUser(fakeUser);
+  localStorage.setItem(
+      "user", JSON.stringify(fakeUser)
+  )
+};
 
   const logout =
     () => {

@@ -17,13 +17,14 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import { getCourseById } from "../../data/courses.data";
 import StarRating from "../../components/course/starRating";
 import { getCourseStats, getSectionStats } from "../../utils/duration";
 
+import { useCourse } from "../../hooks/useCourse";
+
 const CourseDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const course = id ? getCourseById(id) : undefined;
+  const { course, loading } = useCourse(id);
 
   // All hooks must run unconditionally, before any early return.
   const [isStuck, setIsStuck] = useState(false);
@@ -71,6 +72,15 @@ useEffect(() => {
       window.removeEventListener("resize", handleScroll);
     };
   }, [course]);
+
+
+    if (loading) {
+    return (
+      <div className="mx-auto max-w-7xl px-6 py-20 text-center text-gray-500">
+        Loading course...
+      </div>
+    );
+  }
 
   if (!course) {
     return (
