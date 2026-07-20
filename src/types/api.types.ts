@@ -10,6 +10,19 @@ import type {
   UpdateLectureInput,
 } from "./course.types";
 
+import type { Enrollment } from "./enrollment.types";
+
+export interface EnrollmentApi {
+  getByStudent(studentId: string) : Promise<Enrollment[]>;
+  isEnrolled(studentId: string, courseId: string) : Promise<boolean>;
+  enroll(studentId: string, courseId: string): Promise<Enrollment>;
+  toggleLecture(
+    studentId: string,
+    courseId: string,
+    lectureId: string
+  ): Promise<Enrollment>;
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
