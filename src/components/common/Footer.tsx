@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUp, GraduationCap } from "lucide-react";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "../../animations/variants";
 
 const footerLinks = {
   Platform: [
@@ -13,17 +14,8 @@ const footerLinks = {
   ],
 };
 
-const columnVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const containerVariants: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.1 },
-  },
-};
+const columnVariants = fadeInUp;
+const containerVariants = staggerContainer(0.1, 0);
 
 const FooterLink = ({ to, label }: { to: string; label: string }) => (
   <Link to={to} className="group inline-flex items-center text-sm text-slate-400 transition-colors duration-200 hover:text-white">

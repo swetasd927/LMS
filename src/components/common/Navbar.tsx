@@ -2,27 +2,15 @@ import { useEffect, useState } from "react";
 import { Button, Drawer, Input } from "antd";
 import { GraduationCap, Menu, Search, X } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
+import { slideInRight, staggerContainer } from "../../animations/variants";
 
-const navLinks = [
-  { label: "Courses", to: "/courses" },
-  { label: "Help Center", to: "/help-center" },
-];
+const navLinks = [{ label: "Courses", to: "/courses" }];
 
-const mobileListVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.05 },
-  },
-};
-
-const mobileItemVariants: Variants = {
-  hidden: { opacity: 0, x: 16 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.25, ease: "easeOut" } },
-};
+const mobileListVariants = staggerContainer(0.06, 0.05);
+const mobileItemVariants = slideInRight;
 
 const Navbar = () => {
   const navigate = useNavigate();
