@@ -26,3 +26,8 @@ export const hoverLiftTransition = {
   stiffness: 300,
   damping: 22,
 };
+
+export const slideInRight: Variants = {
+  hidden: { opacity: 0, x: 16 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.25, ease: "easeOut" } },
+};
