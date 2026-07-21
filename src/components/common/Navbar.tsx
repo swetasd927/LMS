@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
-import { Button, Drawer, Input } from "antd";
-import { GraduationCap, Menu, Search, X } from "lucide-react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Button, Drawer, Dropdown, Input } from "antd";
+import type { MenuProps } from "antd";
+import { ChevronDown, GraduationCap, LogOut, Menu, Search, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import { slideInRight, staggerContainer } from "../../animations/variants";
 
-const navLinks = [{ label: "Courses", to: "/courses" }];
+const getInitials = (name: string) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
 
 const mobileListVariants = staggerContainer(0.06, 0.05);
 const mobileItemVariants = slideInRight;
@@ -35,6 +42,31 @@ const Navbar = () => {
     setIsDrawerOpen(false);
     navigate("/register", { state: { role: "instructor" } });
   };
+
+  const profileMenuItems: MenuProps["items"] = user
+    ? [
+        {
+          key: "info",
+          label: (
+            <div className="min-w-40 px-1 py-1">
+              <p className="truncate text-sm font-semibold text-gray-900">
+                {user.name}
+              </p>
+              <p className="text-xs capitalize text-gray-500">{user.role}</p>
+            </div>
+          ),
+          disabled: true,
+        },
+        { type: "divider" },
+        {
+          key: "logout",
+          label: "Logout",
+          icon: <LogOut size={14} />,
+          danger: true,
+          onClick: handleLogout,
+        },
+      ]
+    : [];
 
   return (
     <motion.nav
@@ -66,25 +98,6 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Nav links : desktop only */}
-        <div className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-indigo-50 text-indigo-700"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </div>
-
         {/* Search : desktop only */}
         <div className="hidden flex-1 lg:block lg:max-w-sm">
           <Input
@@ -108,14 +121,22 @@ const Navbar = () => {
           )}
 
           {user ? (
-            <>
-              <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium capitalize text-indigo-700">
-                {user.role}
-              </span>
-              <Button danger shape="round" onClick={handleLogout}>
-                Logout
-              </Button>
-            </>
+            <Dropdown
+              menu={{ items: profileMenuItems }}
+              trigger={["click"]}
+              placement="bottomRight"
+            >
+              <button
+                type="button"
+                aria-label="Open profile menu"
+                className="flex items-center gap-1.5 rounded-full py-1 pl-1 pr-2 transition-colors hover:bg-gray-50"
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-indigo-600 to-violet-500 text-xs font-bold text-white">
+                  {getInitials(user.name)}
+                </span>
+                <ChevronDown size={16} className="text-gray-500" />
+              </button>
+            </Dropdown>
           ) : (
             <>
               <Link to="/login">
@@ -184,28 +205,24 @@ const Navbar = () => {
             />
           </motion.div>
 
-          <div className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <motion.div key={link.to} variants={mobileItemVariants}>
-                <Link
-                  to={link.to}
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-                >
-                  {link.label}
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
           {user ? (
             <>
-              <motion.span
+              <motion.div
                 variants={mobileItemVariants}
-                className="w-fit rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium capitalize text-indigo-700"
+                className="flex items-center gap-3 rounded-xl bg-gray-50 px-3 py-2.5"
               >
-                {user.role}
-              </motion.span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-indigo-600 to-violet-500 text-xs font-bold text-white">
+                  {getInitials(user.name)}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-gray-900">
+                    {user.name}
+                  </p>
+                  <p className="text-xs capitalize text-gray-500">
+                    {user.role}
+                  </p>
+                </div>
+              </motion.div>
               <motion.div variants={mobileItemVariants}>
                 <Button danger shape="round" block onClick={handleLogout}>
                   Logout
