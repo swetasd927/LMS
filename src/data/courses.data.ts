@@ -1,6 +1,6 @@
 import type { Course } from "../types/course.types";
 
-export const courses: Course[] = [
+const rawCourses = [
   {
     id: "1",
     title: "Complete React Bootcamp: Zero to Advanced",
@@ -253,7 +253,14 @@ export const courses: Course[] = [
       },
     ],
   },
-] as unknown as Course[];
+];
+
+export const courses: Course[] = (rawCourses as unknown as Course[]).map((c) => ({
+  ...c,
+  status: c.status ?? "published",
+  createdAt: c.createdAt ?? new Date().toISOString(),
+  updatedAt: c.updatedAt ?? new Date().toISOString(),
+}));
 
 export const getCourseById = (id: string): Course | undefined =>
   courses.find((course) => course.id === id);
