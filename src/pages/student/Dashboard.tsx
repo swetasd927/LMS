@@ -10,7 +10,7 @@ import { useCourses } from "../../hooks/useCourses";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 import type { MyLearningItem } from "../../types/enrollment.types";
 import ContinueLearningCard from "./ContinueLearningCard";
-import StatPill from "./statPill";
+import StatPill from "./StatPill";
 import CourseRail from "./CourseRail";
 
 const gridVariants = staggerContainer(0.08, 0.05);

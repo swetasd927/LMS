@@ -12,6 +12,7 @@ export interface Lecture {
   type: "video" | "article";
   isPreview?: boolean;
   order: number;
+  description?: string;
 }
 
 export interface CourseDay {
@@ -74,5 +75,6 @@ export interface CreateLectureInput {
   duration?: string;
   type?: "video" | "article";
   isPreview?: boolean;
+  description?: string;
 }
 export type UpdateLectureInput = Partial<CreateLectureInput>;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input, Modal, Select, message } from "antd";
+import { Button, Input, InputNumber, Modal, Select, message } from "antd";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 
@@ -23,11 +23,12 @@ interface BasicInfoState {
   level?: Course["level"];
   language: string;
   thumbnail: string;
+  price: number;
 }
 
 const emptyInfo: BasicInfoState = {
   title: "", subtitle: "", description: "", category: undefined, level: undefined,
-  language: "English", thumbnail: "",
+  language: "English", thumbnail: "", price: 0,
 };
 
 interface CourseBuilderModalProps {
@@ -51,7 +52,7 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
       ? {
           title: course.title, subtitle: course.subtitle, description: course.description,
           category: course.category, level: course.level, language: course.language,
-          thumbnail: course.thumbnail,
+          thumbnail: course.thumbnail, price: course.price,
         }
       : emptyInfo,
   );
@@ -78,7 +79,8 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
         {
           title: info.title.trim(), subtitle: info.subtitle.trim(), description: info.description.trim(),
           category: info.category!, level: info.level!, language: info.language.trim() || "English",
-          thumbnail: info.thumbnail, instructor: { id: user.id, name: user.name },
+          thumbnail: info.thumbnail, price: info.price,
+          instructor: { id: user.id, name: user.name },
         },
         {
           onSuccess: (created) => {
@@ -96,7 +98,7 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
     const payload: UpdateCourseInput = {
       title: info.title.trim(), subtitle: info.subtitle.trim(), description: info.description.trim(),
       category: info.category, level: info.level, language: info.language.trim() || "English",
-      thumbnail: info.thumbnail,
+      thumbnail: info.thumbnail, price: info.price,
     };
 
     updateCourse.mutate(
@@ -267,9 +269,27 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
                 <Select className="w-full" placeholder="Select level" value={info.level} options={COURSE_LEVELS.map((l) => ({ value: l, label: l }))} onChange={(level) => setInfo((f) => ({ ...f, level }))} />
               </div>
             </div>
-            <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Language</p>
-              <Input placeholder="English" value={info.language} onChange={(e) => setInfo((f) => ({ ...f, language: e.target.value }))} />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="mb-1 text-sm font-medium text-gray-700">Language</p>
+                <Input
+                  placeholder="English"
+                  value={info.language}
+                  onChange={(e) => setInfo((f) => ({ ...f, language: e.target.value }))}
+                />
+              </div>
+              <div>
+                <p className="mb-1 text-sm font-medium text-gray-700">Price (Rs.)</p>
+                <InputNumber
+                  className="w-full"
+                  min={0}
+                  step={100}
+                  placeholder="0"
+                  prefix="Rs."
+                  value={info.price}
+                  onChange={(price) => setInfo((f) => ({ ...f, price: price ?? 0 }))}
+                />
+              </div>
             </div>
             <ThumbnailPicker value={info.thumbnail} category={info.category} onChange={(thumbnail) => setInfo((f) => ({ ...f, thumbnail }))} />
             <div className="flex justify-end pt-2">
