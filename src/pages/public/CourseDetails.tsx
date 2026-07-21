@@ -51,9 +51,7 @@ const CourseDetails = () => {
   const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  const [purchaseOption, setPurchaseOption] = useState<
-    "individual" | "subscribe"
-  >("individual");
+const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">("individual");
 
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState("");
@@ -123,10 +121,10 @@ const CourseDetails = () => {
   const allExpanded = activeKeys.length === allSectionKeys.length;
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Dark hero */}
       <div className="bg-[#1c1d1f] text-white">
-        <div className="mx-auto max-w-4xl px-6 py-8">
+        <div className="mx-auto max-w-7xl px-6 py-8">
           <nav className="mb-3 text-xs text-gray-300">
             <Link to="/courses" className="hover:text-white hover:underline">
               Courses
@@ -141,7 +139,7 @@ const CourseDetails = () => {
             </span>
           )}
 
-          <h1 className="text-2xl font-bold md:text-3xl">{course.title}</h1>
+          <h1 className="wrap-break-word text-2xl font-bold md:text-3xl">{course.title}</h1>
           <p className="mt-3 text-base text-gray-200">{course.subtitle}</p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
@@ -176,7 +174,7 @@ const CourseDetails = () => {
       {/* Body */}
       <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="grid gap-12 lg:grid-cols-3">
-          <div className="order-2 lg:order-1 lg:col-span-2">
+          <div className="order-2 min-w-0 lg:order-1 lg:col-span-2">
             <section className="rounded-lg border border-gray-300 p-6">
               <h2 className="mb-4 text-xl font-bold">What you'll learn</h2>
               <ul className="grid gap-3 sm:grid-cols-2">
@@ -222,9 +220,9 @@ const CourseDetails = () => {
                   return {
                     key: String(i),
                     label: (
-                      <div className="flex w-full items-center justify-between pr-2">
-                        <span className="font-semibold">{section.title}</span>
-                        <span className="text-xs font-normal text-gray-500">
+                      <div className="flex w-full min-w-0 items-center justify-between gap-3 pr-2">
+                        <span className="min-w-0 wrap-break-word font-semibold">{section.title}</span>
+                        <span className="shrink-0 whitespace-nowrap text-xs font-normal text-gray-500">
                           {sectionStats.lectureCount} lectures •{" "}
                           {sectionStats.duration}
                         </span>
@@ -235,9 +233,9 @@ const CourseDetails = () => {
                         {section.lectures.map((lecture) => (
                           <li
                             key={lecture.id}
-                            className="flex items-center justify-between py-2.5 text-sm"
+                            className="flex items-center justify-between gap-3 py-2.5 text-sm"
                           >
-                            <span className="flex items-center gap-2 text-gray-700">
+                            <span className="flex min-w-0 items-center gap-2 wrap-break-word text-gray-700">
                               {lecture.type === "video" ? (
                                 <PlayCircle
                                   size={16}
@@ -251,7 +249,7 @@ const CourseDetails = () => {
                               )}
                               {lecture.title}
                             </span>
-                            <span className="flex items-center gap-3 whitespace-nowrap pl-4">
+                            <span className="flex shrink-0 items-center gap-3 whitespace-nowrap pl-4">
                               {lecture.isPreview && (
                                 <span className="cursor-pointer text-xs font-semibold text-purple-700 underline">
                                   Preview
@@ -319,11 +317,11 @@ const CourseDetails = () => {
           </div>
 
           {/* Sticky purchase card */}
-          <div className="order-1 lg:order-2">
+          <div className="order-1 min-w-0 lg:order-2">
             {/* Sentinel — marks where the card naturally sits before it locks */}
             <div ref={sentinelRef} />
 
-            <div className="sticky top-24 overflow-hidden rounded-lg border border-gray-300 shadow-lg">
+            <div className="sticky top-24 w-full overflow-hidden rounded-lg border border-gray-300 shadow-lg">
               {!isStuck && (
                 <div className="relative h-48 w-full">
                   <img
