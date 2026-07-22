@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Checkbox, Input, Select, Popconfirm } from "antd";
-import { Check, FileText, Pencil, Trash2, Video, X } from "lucide-react";
+import { Check, FileText, Link2, Pencil, Trash2, Video, X } from "lucide-react";
 import type { CreateLectureInput, Lecture } from "../../types/course.types";
 import { LECTURE_TYPES } from "../../data/courseOptions.data";
 
@@ -22,9 +22,19 @@ const emptyForm: LectureFormState = {
   isPreview: false,
 };
 
+const toFormState = (lecture: Lecture): LectureFormState => ({
+  title: lecture.title,
+  description: lecture.description ?? "",
+  videoUrl: lecture.videoUrl,
+  duration: lecture.duration,
+  type: lecture.type,
+  isPreview: Boolean(lecture.isPreview),
+});
+
 interface LectureRowProps {
   lecture?: Lecture;
   saving?: boolean;
+  /** Called after a successful "Add lecture" — parent decides whether to keep the form open. */
   onSave: (values: CreateLectureInput) => void;
   onDelete?: () => void;
   onCancelAdd?: () => void;
@@ -33,18 +43,7 @@ interface LectureRowProps {
 const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureRowProps) => {
   const isNew = !lecture;
   const [editing, setEditing] = useState(isNew);
-  const [form, setForm] = useState<LectureFormState>(
-    lecture
-      ? {
-          title: lecture.title,
-          description: lecture.description ?? "",
-          videoUrl: lecture.videoUrl,
-          duration: lecture.duration,
-          type: lecture.type,
-          isPreview: Boolean(lecture.isPreview),
-        }
-      : emptyForm,
-  );
+  const [form, setForm] = useState<LectureFormState>(lecture ? toFormState(lecture) : emptyForm);
 
   const canSave = form.title.trim().length > 0 && form.videoUrl.trim().length > 0;
 
@@ -59,6 +58,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
       isPreview: form.isPreview,
     });
     if (isNew) {
+      // Reset so the same form is immediately ready for the next lecture.
       setForm(emptyForm);
     } else {
       setEditing(false);
@@ -70,19 +70,11 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
       onCancelAdd?.();
       return;
     }
-    if (lecture) {
-      setForm({
-        title: lecture.title,
-        description: lecture.description ?? "",
-        videoUrl: lecture.videoUrl,
-        duration: lecture.duration,
-        type: lecture.type,
-        isPreview: Boolean(lecture.isPreview),
-      });
-    }
+    if (lecture) setForm(toFormState(lecture));
     setEditing(false);
   };
 
+  // Read-only row (existing lecture, not being edited)
   if (!editing && lecture) {
     return (
       <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
@@ -94,19 +86,22 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
           )}
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-gray-800">{lecture.title}</p>
-            {lecture.description && (
-              <p className="truncate text-xs text-gray-500">{lecture.description}</p>
-            )}
             <p className="truncate text-xs text-gray-400">
               {lecture.duration}
               {lecture.isPreview ? " · Preview" : ""}
+              {lecture.description ? ` · ${lecture.description}` : ""}
             </p>
           </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-1">
           <Button size="small" type="text" icon={<Pencil size={14} />} onClick={() => setEditing(true)} />
-          <Popconfirm title="Delete this lecture?" okText="Delete" okButtonProps={{ danger: true }} onConfirm={onDelete}>
+          <Popconfirm
+            title="Delete this lecture?"
+            okText="Delete"
+            okButtonProps={{ danger: true }}
+            onConfirm={onDelete}
+          >
             <Button size="small" type="text" danger icon={<Trash2 size={14} />} />
           </Popconfirm>
         </div>
@@ -114,12 +109,13 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
     );
   }
 
+  // Add / edit form
   return (
-    <div className="space-y-2 rounded-lg border border-indigo-200 bg-indigo-50/40 p-3">
+    <div className="space-y-2.5 rounded-lg border border-indigo-200 bg-indigo-50/40 p-3">
       <div className="flex gap-2">
         <Input
           autoFocus
-          placeholder="Lecture title"
+          placeholder="Lecture title*"
           value={form.title}
           onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
           onPressEnter={handleSave}
@@ -132,20 +128,27 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
         />
       </div>
 
-      <Input.TextArea
-        rows={2}
-        placeholder="Lecture description (optional)"
-        value={form.description}
-        onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-      />
-
-      <div className="flex gap-2">
+      <div>
         <Input
-          placeholder="https://www.youtube.com/watch?v=..."
+          prefix={<Link2 size={14} className="mr-1 text-gray-400" />}
+          placeholder="Video URL* — https://www.youtube.com/watch?v=..."
           value={form.videoUrl}
           onChange={(e) => setForm((f) => ({ ...f, videoUrl: e.target.value }))}
           onPressEnter={handleSave}
         />
+        <p className="mt-1 text-xs text-gray-400">
+          Paste a YouTube / Vimeo / hosted video link. Required to add this lecture.
+        </p>
+      </div>
+
+      <Input.TextArea
+        rows={2}
+        placeholder="Short description (optional)"
+        value={form.description}
+        onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+      />
+
+      <div className="flex items-center gap-2">
         <Input
           placeholder="mm:ss"
           value={form.duration}
@@ -153,19 +156,28 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
           onPressEnter={handleSave}
           className="w-24 shrink-0"
         />
-      </div>
-
-      <div className="flex items-center justify-between">
-        <Checkbox checked={form.isPreview} onChange={(e) => setForm((f) => ({ ...f, isPreview: e.target.checked }))}>
+        <Checkbox
+          checked={form.isPreview}
+          onChange={(e) => setForm((f) => ({ ...f, isPreview: e.target.checked }))}
+        >
           <span className="text-sm text-gray-600">Free preview</span>
         </Checkbox>
+      </div>
 
-        <div className="flex items-center gap-1">
-          <Button size="small" icon={<X size={14} />} onClick={handleCancel}>Cancel</Button>
-          <Button size="small" type="primary" icon={<Check size={14} />} disabled={!canSave} loading={saving} onClick={handleSave}>
-            {isNew ? "Add lecture" : "Save"}
-          </Button>
-        </div>
+      <div className="flex items-center justify-end gap-1 pt-0.5">
+        <Button size="small" icon={<X size={14} />} onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button
+          size="small"
+          type="primary"
+          icon={<Check size={14} />}
+          disabled={!canSave}
+          loading={saving}
+          onClick={handleSave}
+        >
+          {isNew ? "Add lecture" : "Save"}
+        </Button>
       </div>
     </div>
   );
