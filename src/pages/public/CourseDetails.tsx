@@ -25,6 +25,7 @@ import StarRating from "../../components/course/starRating";
 import { getCourseStats, getSectionStats } from "../../utils/duration";
 
 import { useCourse } from "../../hooks/useCourse";
+import CoursePreviewModal from "../../components/course/CoursePreviewModal";
 
 const CourseDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -51,10 +52,13 @@ const CourseDetails = () => {
   const [activeKeys, setActiveKeys] = useState<string[]>(["0"]);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">("individual");
+  const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">("individual");
 
   const [couponInput, setCouponInput] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState("");
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewLectureId, setPreviewLectureId] = useState<string | null>(null);
 
   const handleApplyCoupon = () => {
     if (couponInput.trim()) {
@@ -115,6 +119,17 @@ const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">
         ((course.originalPrice - course.price) / course.originalPrice) * 100,
       )
     : null;
+
+  const previewLectures = course.days.flatMap((section) =>
+    section.lectures
+      .filter((lecture) => lecture.isPreview)
+      .map((lecture) => ({ ...lecture, sectionTitle: section.title })),
+  );
+
+  const openPreview = (lectureId?: string) => {
+    setPreviewLectureId(lectureId ?? previewLectures[0]?.id ?? null);
+    setPreviewOpen(true);
+  };
 
   const stats = getCourseStats(course.days);
   const allSectionKeys = course.days.map((_, i) => String(i));
@@ -251,9 +266,13 @@ const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">
                             </span>
                             <span className="flex shrink-0 items-center gap-3 whitespace-nowrap pl-4">
                               {lecture.isPreview && (
-                                <span className="cursor-pointer text-xs font-semibold text-purple-700 underline">
+                                <button
+                                  type="button"
+                                  onClick={() => openPreview(lecture.id)}
+                                  className="cursor-pointer text-xs font-semibold text-purple-700 underline hover:text-purple-900"
+                                >
                                   Preview
-                                </span>
+                                </button>
                               )}
                               <span className="text-xs text-gray-500">
                                 {lecture.duration}
@@ -330,7 +349,9 @@ const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">
                     className="h-full w-full object-cover"
                   />
                   <button
+                    type="button"
                     aria-label="Preview this course"
+                    onClick={() => openPreview()}
                     className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors hover:bg-black/30"
                   >
                     <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90">
@@ -509,6 +530,15 @@ const [purchaseOption, setPurchaseOption] = useState<"individual" | "subscribe">
           </div>
         </div>
       </div>
+
+      <CoursePreviewModal
+        open={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        courseTitle={course.title}
+        previewLectures={previewLectures}
+        activeLectureId={previewLectureId}
+        onSelectLecture={setPreviewLectureId}
+      />
     </div>
   );
 };
