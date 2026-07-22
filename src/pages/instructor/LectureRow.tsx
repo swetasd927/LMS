@@ -1,8 +1,29 @@
 import { useState } from "react";
 import { Button, Checkbox, Input, Select, Popconfirm } from "antd";
 import { Check, Clock, FileText, Link2, Pencil, Trash2, Video, X } from "lucide-react";
+import ReactQuill from "react-quill-new";
+import DOMPurify from "dompurify";
+import "react-quill-new/dist/quill.snow.css";
 import type { CreateLectureInput, Lecture } from "../../types/course.types";
 import { LECTURE_TYPES } from "../../data/courseOptions.data";
+
+/** Toolbar kept intentionally small — this is a lecture description, not a blog post. */
+const DESCRIPTION_MODULES = {
+  toolbar: [
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link"],
+    ["clean"],
+  ],
+};
+const DESCRIPTION_FORMATS = ["bold", "italic", "underline", "strike", "list", "link"];
+
+/** Quill's empty state is "<p><br></p>", not "" — normalize so canSave/validation isn't fooled by it. */
+const isQuillEmpty = (html: string) => html.replace(/<(.|\n)*?>/g, "").trim().length === 0;
+
+/** Plain-text preview for the collapsed row — strips tags so we don't dump raw HTML into a <span>. */
+const stripHtml = (html: string) =>
+  DOMPurify.sanitize(html, { ALLOWED_TAGS: [] }).replace(/\s+/g, " ").trim();
 
 /** m:ss, mm:ss, or hh:mm:ss — 4:05, 12:30, 1:04:00 all pass; "ssss" or "99:99" don't. */
 const DURATION_PATTERN = /^(\d{1,2}:)?\d{1,2}:[0-5]\d$/;
@@ -55,7 +76,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
     if (!canSave) return;
     onSave({
       title: form.title.trim(),
-      description: form.description.trim() || undefined,
+      description: isQuillEmpty(form.description) ? undefined : form.description,
       videoUrl: form.videoUrl.trim(),
       duration: form.duration.trim() || "0:00",
       type: form.type,
@@ -100,9 +121,9 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
                   Preview
                 </span>
               )}
-              {lecture.description && (
+              {lecture.description && !isQuillEmpty(lecture.description) && (
                 <span className="min-w-0 truncate text-xs text-gray-400">
-                  {lecture.description}
+                  {stripHtml(lecture.description)}
                 </span>
               )}
             </div>
@@ -156,12 +177,18 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
         </p>
       </div>
 
-      <Input.TextArea
-        rows={2}
-        placeholder="Short description (optional)"
-        value={form.description}
-        onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-      />
+      <div>
+        <p className="mb-1.5 text-xs text-gray-400">Description (optional)</p>
+        <ReactQuill
+          theme="snow"
+          value={form.description}
+          onChange={(html) => setForm((f) => ({ ...f, description: html }))}
+          modules={DESCRIPTION_MODULES}
+          formats={DESCRIPTION_FORMATS}
+          placeholder="Add notes, resources, or a longer write-up for this lecture…"
+          className="bg-white [&_.ql-container]:rounded-b-lg [&_.ql-container]:text-sm [&_.ql-editor]:min-h-24 [&_.ql-toolbar]:rounded-t-lg"
+        />
+      </div>
 
       <div className="flex items-start gap-30 pt-4">
         <div className="w-24 shrink-0">
