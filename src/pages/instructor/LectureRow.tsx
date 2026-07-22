@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Button, Checkbox, Input, Select, Popconfirm } from "antd";
-import { Check, FileText, Link2, Pencil, Trash2, Video, X } from "lucide-react";
+import { Check, Clock, FileText, Link2, Pencil, Trash2, Video, X } from "lucide-react";
 import type { CreateLectureInput, Lecture } from "../../types/course.types";
 import { LECTURE_TYPES } from "../../data/courseOptions.data";
+
+/** m:ss, mm:ss, or hh:mm:ss — 4:05, 12:30, 1:04:00 all pass; "ssss" or "99:99" don't. */
+const DURATION_PATTERN = /^(\d{1,2}:)?\d{1,2}:[0-5]\d$/;
 
 interface LectureFormState {
   title: string;
@@ -45,7 +48,8 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
   const [editing, setEditing] = useState(isNew);
   const [form, setForm] = useState<LectureFormState>(lecture ? toFormState(lecture) : emptyForm);
 
-  const canSave = form.title.trim().length > 0 && form.videoUrl.trim().length > 0;
+  const durationValid = form.duration.trim() === "" || DURATION_PATTERN.test(form.duration.trim());
+  const canSave = form.title.trim().length > 0 && form.videoUrl.trim().length > 0 && durationValid;
 
   const handleSave = () => {
     if (!canSave) return;
@@ -86,11 +90,22 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
           )}
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-gray-800">{lecture.title}</p>
-            <p className="truncate text-xs text-gray-400">
-              {lecture.duration}
-              {lecture.isPreview ? " · Preview" : ""}
-              {lecture.description ? ` · ${lecture.description}` : ""}
-            </p>
+            <div className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="flex shrink-0 items-center gap-1 text-xs text-gray-400">
+                <Clock size={11} />
+                {lecture.duration || "0:00"}
+              </span>
+              {lecture.isPreview && (
+                <span className="shrink-0 rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-purple-700">
+                  Preview
+                </span>
+              )}
+              {lecture.description && (
+                <span className="min-w-0 truncate text-xs text-gray-400">
+                  {lecture.description}
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -148,17 +163,27 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
         onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
       />
 
-      <div className="flex items-center gap-2">
-        <Input
-          placeholder="mm:ss"
-          value={form.duration}
-          onChange={(e) => setForm((f) => ({ ...f, duration: e.target.value }))}
-          onPressEnter={handleSave}
-          className="w-24 shrink-0"
-        />
+      <div className="flex items-start gap-2">
+        <div className="w-24 shrink-0">
+          <Input
+            placeholder="mm:ss"
+            value={form.duration}
+            onChange={(e) => {
+              // Only digits and colons — garbage like "sssss" can never be typed in.
+              const cleaned = e.target.value.replace(/[^\d:]/g, "");
+              setForm((f) => ({ ...f, duration: cleaned }));
+            }}
+            onPressEnter={handleSave}
+            status={!durationValid ? "error" : undefined}
+          />
+          {!durationValid && (
+            <p className="mt-1 text-[11px] text-red-500">Use mm:ss, e.g. 4:30</p>
+          )}
+        </div>
         <Checkbox
           checked={form.isPreview}
           onChange={(e) => setForm((f) => ({ ...f, isPreview: e.target.checked }))}
+          className="mt-1.5"
         >
           <span className="text-sm text-gray-600">Free preview</span>
         </Checkbox>
