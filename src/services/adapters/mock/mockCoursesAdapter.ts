@@ -99,8 +99,8 @@ export const mockCoursesAdapter: CoursesApi = {
     const day = course.days.find(d => d.id === dayId);
     if (!day) return notFound("Day", dayId);
     const lecture: Lecture = {
-      id: generateId("lec"), title: payload.title, videoUrl: payload.videoUrl,
-      duration: payload.duration ?? "0:00", type: payload.type ?? "video",
+      id: generateId("lec"), title: payload.title, description: payload.description,
+      videoUrl: payload.videoUrl, duration: payload.duration ?? "0:00", type: payload.type ?? "video",
       isPreview: payload.isPreview ?? false, order: day.lectures.length + 1,
     };
     day.lectures.push(lecture);

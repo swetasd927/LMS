@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Button, Popconfirm, message } from "antd";
-import { motion } from "framer-motion";
-import { BookOpen, Pencil, Plus, Trash2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { BookOpen, ChevronUp, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import { useCourses } from "../../hooks/useCourses";
 import { useCourseMutations } from "../../hooks/useMutation";
 import type { Course } from "../../types/course.types";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
-import CourseBuilderModal from "./CourseBuilderModal";
+import CourseBuilder from "./CourseBuilder";
 
 const gridVariants = staggerContainer(0.08, 0.05);
 
@@ -46,10 +46,32 @@ const InstructorDashboard = () => {
           <h1 className="text-3xl font-bold">My Courses</h1>
           <p className="mt-1 text-gray-500">Create courses, then add sections and lecture videos.</p>
         </div>
-        <Button type="primary" size="large" icon={<Plus size={16} />} onClick={() => setBuilder({})}>
-          Create Course
+        <Button
+          type="primary"
+          size="large"
+          icon={builder ? <ChevronUp size={16} /> : <Plus size={16} />}
+          onClick={() => setBuilder((b) => (b ? null : {}))}
+        >
+          {builder && !builder.course ? "Close" : "Create Course"}
         </Button>
       </div>
+
+      <AnimatePresence initial={false}>
+        {builder && (
+          <motion.div
+            key="course-builder"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="mb-8">
+              <CourseBuilder course={builder.course} onClose={() => setBuilder(null)} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {loading && (
         <div className="grid gap-6 md:grid-cols-3">
@@ -85,8 +107,14 @@ const InstructorDashboard = () => {
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                <Button icon={<Pencil size={14} />} size="small" onClick={() => setBuilder({ course })}>
-                  Manage Content
+                <Button
+                  icon={<Pencil size={14} />}
+                  size="small"
+                  onClick={() =>
+                    setBuilder((b) => (b?.course?.id === course.id ? null : { course }))
+                  }
+                >
+                  {builder?.course?.id === course.id ? "Close" : "Manage Content"}
                 </Button>
                 <Button size="small" onClick={() => handleTogglePublish(course.id, course.status === "published")}>
                   {course.status === "published" ? "Unpublish" : "Publish"}
@@ -100,7 +128,6 @@ const InstructorDashboard = () => {
         </motion.div>
       )}
 
-      <CourseBuilderModal open={builder !== null} course={builder?.course} onClose={() => setBuilder(null)} />
     </div>
   );
 };

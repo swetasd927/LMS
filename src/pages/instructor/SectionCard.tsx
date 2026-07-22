@@ -73,7 +73,7 @@ const SectionCard = ({
 
           {addingLecture ? (
             <LectureRow
-              onSave={(payload) => { onAddLecture(payload); setAddingLecture(false); }}
+              onSave={(payload) =>  onAddLecture(payload)}
               onCancelAdd={() => setAddingLecture(false)}
             />
           ) : (

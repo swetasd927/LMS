@@ -7,11 +7,21 @@ export interface Instructor {
 export interface Lecture {
   id: string;
   title: string;
+  description?: string;
   videoUrl: string;
   duration: string; // "mm:ss"
   type: "video" | "article";
   isPreview?: boolean;
   order: number;
+}
+
+export interface CreateLectureInput {
+  title: string;
+  description?: string;
+  videoUrl: string;
+  duration?: string;
+  type?: "video" | "article";
+  isPreview?: boolean;
 }
 
 export interface CourseDay {
@@ -68,11 +78,5 @@ export interface CreateDayInput {
 }
 export type UpdateDayInput = Partial<CreateDayInput>;
 
-export interface CreateLectureInput {
-  title: string;
-  videoUrl: string;
-  duration?: string;
-  type?: "video" | "article";
-  isPreview?: boolean;
-}
+
 export type UpdateLectureInput = Partial<CreateLectureInput>;

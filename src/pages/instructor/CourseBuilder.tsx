@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button, Input, Modal, Select, message } from "antd";
+import { Button, Input, Select, message } from "antd";
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { BookOpen, Plus } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import { useCourseMutations } from "../../hooks/useMutation";
@@ -13,7 +13,7 @@ import SectionCard from "./SectionCard";
 
 const listVariants = staggerContainer(0.06, 0);
 
-type Tab = "info" | "curriculum" | "details";
+type Step = "info" | "curriculum" | "details";
 
 interface BasicInfoState {
   title: string;
@@ -26,31 +26,46 @@ interface BasicInfoState {
 }
 
 const emptyInfo: BasicInfoState = {
-  title: "", subtitle: "", description: "", category: undefined, level: undefined,
-  language: "English", thumbnail: "",
+  title: "",
+  subtitle: "",
+  description: "",
+  category: undefined,
+  level: undefined,
+  language: "English",
+  thumbnail: "",
 };
 
-interface CourseBuilderModalProps {
-  open: boolean;
+interface CourseBuilderProps {
   course?: Course; // present in edit mode
   onClose: () => void;
 }
 
-const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) => {
+//expandable section
+const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
   const { user } = useAuth();
   const {
-    createCourse, updateCourse, addDay, updateDay, removeDay,
-    addLecture, updateLecture, removeLecture,
+    createCourse,
+    updateCourse,
+    addDay,
+    updateDay,
+    removeDay,
+    addLecture,
+    updateLecture,
+    removeLecture,
   } = useCourseMutations();
 
   const isEdit = Boolean(course);
-  const [tab, setTab] = useState<Tab>("info");
+  const [step, setStep] = useState<Step>("info");
   const [courseId, setCourseId] = useState<string | undefined>(course?.id);
   const [info, setInfo] = useState<BasicInfoState>(
     course
       ? {
-          title: course.title, subtitle: course.subtitle, description: course.description,
-          category: course.category, level: course.level, language: course.language,
+          title: course.title,
+          subtitle: course.subtitle,
+          description: course.description,
+          category: course.category,
+          level: course.level,
+          language: course.language,
           thumbnail: course.thumbnail,
         }
       : emptyInfo,
@@ -76,16 +91,21 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
     if (!courseId) {
       createCourse.mutate(
         {
-          title: info.title.trim(), subtitle: info.subtitle.trim(), description: info.description.trim(),
-          category: info.category!, level: info.level!, language: info.language.trim() || "English",
-          thumbnail: info.thumbnail, instructor: { id: user.id, name: user.name },
+          title: info.title.trim(),
+          subtitle: info.subtitle.trim(),
+          description: info.description.trim(),
+          category: info.category!,
+          level: info.level!,
+          language: info.language.trim() || "English",
+          thumbnail: info.thumbnail,
+          instructor: { id: user.id, name: user.name },
         },
         {
           onSuccess: (created) => {
             message.success("Course created — now build your curriculum.");
             setCourseId(created.id);
             setStatus(created.status);
-            setTab("curriculum");
+            setStep("curriculum");
           },
           onError: () => message.error("Could not create the course. Try again."),
         },
@@ -94,14 +114,21 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
     }
 
     const payload: UpdateCourseInput = {
-      title: info.title.trim(), subtitle: info.subtitle.trim(), description: info.description.trim(),
-      category: info.category, level: info.level, language: info.language.trim() || "English",
+      title: info.title.trim(),
+      subtitle: info.subtitle.trim(),
+      description: info.description.trim(),
+      category: info.category,
+      level: info.level,
+      language: info.language.trim() || "English",
       thumbnail: info.thumbnail,
     };
 
     updateCourse.mutate(
       { id: courseId, payload },
-      { onSuccess: () => message.success("Details saved."), onError: () => message.error("Could not save details.") },
+      {
+        onSuccess: () => message.success("Details saved."),
+        onError: () => message.error("Could not save details."),
+      },
     );
   };
 
@@ -144,7 +171,9 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
       { courseId, dayId, payload },
       {
         onSuccess: (lecture) =>
-          setSections((prev) => prev.map((s) => (s.id === dayId ? { ...s, lectures: [...s.lectures, lecture] } : s))),
+          setSections((prev) =>
+            prev.map((s) => (s.id === dayId ? { ...s, lectures: [...s.lectures, lecture] } : s)),
+          ),
         onError: () => message.error("Could not add the lecture."),
       },
     );
@@ -158,7 +187,9 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
         onSuccess: (lecture) =>
           setSections((prev) =>
             prev.map((s) =>
-              s.id === dayId ? { ...s, lectures: s.lectures.map((l) => (l.id === lecture.id ? lecture : l)) } : s,
+              s.id === dayId
+                ? { ...s, lectures: s.lectures.map((l) => (l.id === lecture.id ? lecture : l)) }
+                : s,
             ),
           ),
         onError: () => message.error("Could not update the lecture."),
@@ -184,7 +215,10 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
     if (!courseId) return;
     updateCourse.mutate(
       { id: courseId, payload: details },
-      { onSuccess: () => message.success("Details saved."), onError: () => message.error("Could not save details.") },
+      {
+        onSuccess: () => message.success("Details saved."),
+        onError: () => message.error("Could not save details."),
+      },
     );
   };
 
@@ -203,105 +237,164 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
     );
   };
 
-  const tabs: { key: Tab; label: string }[] = [
+  const totalLectures = sections.reduce((sum, s) => sum + s.lectures.length, 0);
+
+  const steps: { key: Step; label: string }[] = [
     { key: "info", label: "Basic Info" },
     { key: "curriculum", label: "Curriculum" },
     { key: "details", label: "Details" },
   ];
 
   return (
-    <Modal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      width={860}
-      destroyOnClose
-      title={isEdit ? "Edit course" : "Create a new course"}
-      styles={{ body: { padding: 0 } }}
-    >
-      <div className="flex items-center gap-1 border-b border-gray-100 px-1">
-        {tabs.map((t) => {
-          const locked = t.key !== "info" && !courseId;
+    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+      {/* Step tabs */}
+      <div className="flex items-center gap-1 border-b border-gray-100 px-3">
+        {steps.map((s) => {
+          const locked = s.key !== "info" && !courseId;
           return (
             <button
-              key={t.key}
+              key={s.key}
               type="button"
               disabled={locked}
-              onClick={() => setTab(t.key)}
+              onClick={() => setStep(s.key)}
               title={locked ? "Save the basic info first" : undefined}
               className={`relative px-4 py-3 text-sm font-medium transition-colors ${
-                locked ? "cursor-not-allowed text-gray-300" : tab === t.key ? "text-indigo-600" : "text-gray-500 hover:text-gray-800"
+                locked
+                  ? "cursor-not-allowed text-gray-300"
+                  : step === s.key
+                    ? "text-indigo-600"
+                    : "text-gray-500 hover:text-gray-800"
               }`}
             >
-              {t.label}
-              {tab === t.key && (
-                <motion.span layoutId="builder-tab-underline" className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-indigo-600" />
+              {s.label}
+              {step === s.key && (
+                <motion.span
+                  layoutId="builder-step-underline"
+                  className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-indigo-600"
+                />
               )}
             </button>
           );
         })}
       </div>
 
-      <div className="max-h-[65vh] overflow-y-auto px-6 py-5">
-        {tab === "info" && (
+      <div className="px-6 py-5">
+        {step === "info" && (
           <div className="space-y-4">
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">Title</p>
-              <Input placeholder="Complete React Bootcamp" value={info.title} onChange={(e) => setInfo((f) => ({ ...f, title: e.target.value }))} />
+              <Input
+                placeholder="Complete React Bootcamp"
+                value={info.title}
+                onChange={(e) => setInfo((f) => ({ ...f, title: e.target.value }))}
+              />
             </div>
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">Subtitle</p>
-              <Input placeholder="Build production-ready apps with React" value={info.subtitle} onChange={(e) => setInfo((f) => ({ ...f, subtitle: e.target.value }))} />
+              <Input
+                placeholder="Build production-ready apps with React"
+                value={info.subtitle}
+                onChange={(e) => setInfo((f) => ({ ...f, subtitle: e.target.value }))}
+              />
             </div>
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">Description</p>
-              <Input.TextArea rows={3} placeholder="What will students learn?" value={info.description} onChange={(e) => setInfo((f) => ({ ...f, description: e.target.value }))} />
+              <Input.TextArea
+                rows={3}
+                placeholder="What will students learn?"
+                value={info.description}
+                onChange={(e) => setInfo((f) => ({ ...f, description: e.target.value }))}
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="mb-1 text-sm font-medium text-gray-700">Category</p>
-                <Select className="w-full" placeholder="Select category" value={info.category} options={COURSE_CATEGORIES.map((c) => ({ value: c, label: c }))} onChange={(category) => setInfo((f) => ({ ...f, category }))} />
+                <Select
+                  className="w-full"
+                  placeholder="Select category"
+                  value={info.category}
+                  options={COURSE_CATEGORIES.map((c) => ({ value: c, label: c }))}
+                  onChange={(category) => setInfo((f) => ({ ...f, category }))}
+                />
               </div>
               <div>
                 <p className="mb-1 text-sm font-medium text-gray-700">Level</p>
-                <Select className="w-full" placeholder="Select level" value={info.level} options={COURSE_LEVELS.map((l) => ({ value: l, label: l }))} onChange={(level) => setInfo((f) => ({ ...f, level }))} />
+                <Select
+                  className="w-full"
+                  placeholder="Select level"
+                  value={info.level}
+                  options={COURSE_LEVELS.map((l) => ({ value: l, label: l }))}
+                  onChange={(level) => setInfo((f) => ({ ...f, level }))}
+                />
               </div>
             </div>
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">Language</p>
-              <Input placeholder="English" value={info.language} onChange={(e) => setInfo((f) => ({ ...f, language: e.target.value }))} />
+              <Input
+                placeholder="English"
+                value={info.language}
+                onChange={(e) => setInfo((f) => ({ ...f, language: e.target.value }))}
+              />
             </div>
-            <ThumbnailPicker value={info.thumbnail} category={info.category} onChange={(thumbnail) => setInfo((f) => ({ ...f, thumbnail }))} />
+            <ThumbnailPicker
+              value={info.thumbnail}
+              category={info.category}
+              onChange={(thumbnail) => setInfo((f) => ({ ...f, thumbnail }))}
+            />
             <div className="flex justify-end pt-2">
-              <Button type="primary" disabled={!canSaveInfo} loading={createCourse.isPending || updateCourse.isPending} onClick={handleSaveInfo}>
+              <Button
+                type="primary"
+                disabled={!canSaveInfo}
+                loading={createCourse.isPending || updateCourse.isPending}
+                onClick={handleSaveInfo}
+              >
                 {courseId ? "Save details" : "Create course"}
               </Button>
             </div>
           </div>
         )}
 
-        {tab === "curriculum" && courseId && (
+        {step === "curriculum" && courseId && (
           <div className="space-y-3">
+            <div>
+              <h3 className="text-base font-semibold text-gray-800">Curriculum</h3>
+              <p className="text-sm text-gray-500">
+                Start putting together your course by creating sections, lectures, and quizzes.
+              </p>
+              {sections.length > 0 && (
+                <p className="mt-1 text-xs text-gray-400">
+                  {sections.length} section{sections.length === 1 ? "" : "s"} • {totalLectures}{" "}
+                  lecture{totalLectures === 1 ? "" : "s"}
+                </p>
+              )}
+            </div>
+
             {sections.length === 0 && (
               <div className="rounded-xl border border-dashed border-gray-300 p-10 text-center">
-                <p className="text-sm text-gray-500">No sections yet. Add your first section to start building the curriculum.</p>
+                <BookOpen className="mx-auto mb-2 text-gray-300" size={28} />
+                <p className="text-sm text-gray-500">
+                  No sections yet. Add your first section to start building the curriculum.
+                </p>
               </div>
             )}
 
             <motion.div variants={listVariants} initial="hidden" animate="show" className="space-y-3">
-              {sections.slice().sort((a, b) => a.dayNumber - b.dayNumber).map((section, index) => (
-                <motion.div key={section.id} variants={fadeInUp}>
-                  <SectionCard
-                    section={section}
-                    index={index}
-                    onUpdateTitle={(title) => handleUpdateSectionTitle(section.id, title)}
-                    onDelete={() => handleDeleteSection(section.id)}
-                    onAddLecture={(payload) => handleAddLecture(section.id, payload)}
-                    onUpdateLecture={(lectureId, payload) => handleUpdateLecture(section.id, lectureId, payload)}
-                    onDeleteLecture={(lectureId) => handleDeleteLecture(section.id, lectureId)}
-                  />
-                </motion.div>
-              ))}
+              {sections
+                .slice()
+                .sort((a, b) => a.dayNumber - b.dayNumber)
+                .map((section, index) => (
+                  <motion.div key={section.id} variants={fadeInUp}>
+                    <SectionCard
+                      section={section}
+                      index={index}
+                      onUpdateTitle={(title) => handleUpdateSectionTitle(section.id, title)}
+                      onDelete={() => handleDeleteSection(section.id)}
+                      onAddLecture={(payload) => handleAddLecture(section.id, payload)}
+                      onUpdateLecture={(lectureId, payload) => handleUpdateLecture(section.id, lectureId, payload)}
+                      onDeleteLecture={(lectureId) => handleDeleteLecture(section.id, lectureId)}
+                    />
+                  </motion.div>
+                ))}
             </motion.div>
 
             <button
@@ -314,22 +407,45 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
           </div>
         )}
 
-        {tab === "details" && courseId && (
+        {step === "details" && courseId && (
           <div className="space-y-5">
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">What students will learn</p>
-              <Select mode="tags" className="w-full" placeholder="Type a point and press enter" value={details.whatYouWillLearn} onChange={(whatYouWillLearn) => setDetails((d) => ({ ...d, whatYouWillLearn }))} tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                className="w-full"
+                placeholder="Type a point and press enter"
+                value={details.whatYouWillLearn}
+                onChange={(whatYouWillLearn) => setDetails((d) => ({ ...d, whatYouWillLearn }))}
+                tokenSeparators={[","]}
+              />
             </div>
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">Requirements</p>
-              <Select mode="tags" className="w-full" placeholder="Type a requirement and press enter" value={details.requirements} onChange={(requirements) => setDetails((d) => ({ ...d, requirements }))} tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                className="w-full"
+                placeholder="Type a requirement and press enter"
+                value={details.requirements}
+                onChange={(requirements) => setDetails((d) => ({ ...d, requirements }))}
+                tokenSeparators={[","]}
+              />
             </div>
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">Topics covered</p>
-              <Select mode="tags" className="w-full" placeholder="Type a topic and press enter" value={details.topics} onChange={(topics) => setDetails((d) => ({ ...d, topics }))} tokenSeparators={[","]} />
+              <Select
+                mode="tags"
+                className="w-full"
+                placeholder="Type a topic and press enter"
+                value={details.topics}
+                onChange={(topics) => setDetails((d) => ({ ...d, topics }))}
+                tokenSeparators={[","]}
+              />
             </div>
             <div className="flex justify-end pt-2">
-              <Button type="primary" loading={updateCourse.isPending} onClick={handleSaveDetails}>Save details</Button>
+              <Button type="primary" loading={updateCourse.isPending} onClick={handleSaveDetails}>
+                Save details
+              </Button>
             </div>
           </div>
         )}
@@ -338,13 +454,17 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
       <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
         <div>
           {courseId && (
-            <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${status === "published" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+            <span
+              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${
+                status === "published" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+              }`}
+            >
               {status}
             </span>
           )}
         </div>
         <div className="flex items-center gap-2">
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={onClose}>{isEdit ? "Close" : "Cancel"}</Button>
           {courseId && (
             <Button type="primary" loading={updateCourse.isPending} onClick={handleTogglePublish}>
               {status === "published" ? "Unpublish" : "Publish course"}
@@ -352,8 +472,8 @@ const CourseBuilderModal = ({ open, course, onClose }: CourseBuilderModalProps) 
           )}
         </div>
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default CourseBuilderModal;
+export default CourseBuilder;
