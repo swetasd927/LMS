@@ -280,9 +280,9 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
 
       <div className="px-6 py-5">
         {step === "info" && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Title</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700">Title</p>
               <Input
                 placeholder="Complete React Bootcamp"
                 value={info.title}
@@ -290,7 +290,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               />
             </div>
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Subtitle</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700">Subtitle</p>
               <Input
                 placeholder="Build production-ready apps with React"
                 value={info.subtitle}
@@ -298,7 +298,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               />
             </div>
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Description</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700">Description</p>
               <Input.TextArea
                 rows={3}
                 placeholder="What will students learn?"
@@ -306,9 +306,9 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
                 onChange={(e) => setInfo((f) => ({ ...f, description: e.target.value }))}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-5">
               <div>
-                <p className="mb-1 text-sm font-medium text-gray-700">Category</p>
+                <p className="mb-1.5 text-sm font-medium text-gray-700">Category</p>
                 <Select
                   className="w-full"
                   placeholder="Select category"
@@ -318,7 +318,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
                 />
               </div>
               <div>
-                <p className="mb-1 text-sm font-medium text-gray-700">Level</p>
+                <p className="mb-1.5 text-sm font-medium text-gray-700">Level</p>
                 <Select
                   className="w-full"
                   placeholder="Select level"
@@ -329,19 +329,21 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               </div>
             </div>
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Language</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700">Language</p>
               <Input
                 placeholder="English"
                 value={info.language}
                 onChange={(e) => setInfo((f) => ({ ...f, language: e.target.value }))}
               />
             </div>
-            <ThumbnailPicker
-              value={info.thumbnail}
-              category={info.category}
-              onChange={(thumbnail) => setInfo((f) => ({ ...f, thumbnail }))}
-            />
-            <div className="flex justify-end pt-2">
+            <div>
+              <ThumbnailPicker
+                value={info.thumbnail}
+                category={info.category}
+                onChange={(thumbnail) => setInfo((f) => ({ ...f, thumbnail }))}
+              />
+            </div>
+            <div className="flex justify-end pt-3">
               <Button
                 type="primary"
                 disabled={!canSaveInfo}
