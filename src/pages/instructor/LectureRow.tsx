@@ -126,7 +126,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
 
   // Add / edit form
   return (
-    <div className="space-y-2.5 rounded-lg border border-indigo-200 bg-indigo-50/40 p-3">
+    <div className="space-y-4 rounded-lg border border-indigo-200 bg-indigo-50/40 p-3">
       <div className="flex gap-2">
         <Input
           autoFocus
@@ -151,7 +151,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
           onChange={(e) => setForm((f) => ({ ...f, videoUrl: e.target.value }))}
           onPressEnter={handleSave}
         />
-        <p className="mt-1 text-xs text-gray-400">
+        <p className="mt-1.5 text-xs text-gray-400">
           Paste a YouTube / Vimeo / hosted video link. Required to add this lecture.
         </p>
       </div>
@@ -163,7 +163,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
         onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
       />
 
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2 pt-1">
         <div className="w-24 shrink-0">
           <Input
             placeholder="mm:ss"
@@ -189,7 +189,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
         </Checkbox>
       </div>
 
-      <div className="flex items-center justify-end gap-1 pt-0.5">
+      <div className="flex items-center justify-end gap-1 pt-1">
         <Button size="small" icon={<X size={14} />} onClick={handleCancel}>
           Cancel
         </Button>
