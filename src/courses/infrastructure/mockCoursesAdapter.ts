@@ -1,7 +1,7 @@
-import type { CoursesApi } from "../../../../../types/api.types";
-import type { Course, CourseDay, Lecture } from "../../../course.types";
-import { MOCK_LATENCY_MS } from "../../../../../config/env";
-import { generateId, mockDb } from "./db";
+import type { CoursesApi } from "../../types/api.types";
+import type { Course, CourseDay, Lecture } from "../../features/auth/context/courses/types/course.types";
+import { MOCK_LATENCY_MS } from "../../config/env";
+import { generateId, mockDb } from "./adapters/mock/db";
 
 const delay = (ms = MOCK_LATENCY_MS) => new Promise((r) => setTimeout(r, ms));
 const notFound = (what: string, id: string): never => { throw new Error(`${what} "${id}" not found`); };

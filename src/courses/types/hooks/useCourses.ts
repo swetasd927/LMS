@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { coursesService } from "../services/courses.services";
+import { coursesService } from "../../infrastructure/courses.services";
 import { courseKeys } from "./queryKeys";
 
 interface CourseFilters {

@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { COURSE_THUMBNAILS } from "../../../../../../data/imageAssets.data";
+import { COURSE_THUMBNAILS } from "../../../../data/imageAssets.data";
 
 interface ThumbnailPickerProps {
   value?: string;

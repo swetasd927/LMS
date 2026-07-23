@@ -1,5 +1,5 @@
 import { motion, type Variants } from "framer-motion";
-import { useInView } from "../../courses/hooks/useInView";
+import { useInView } from "../../shared/useInView";
 
 const categories = [
   "Programming",

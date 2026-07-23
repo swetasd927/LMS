@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import { useCountUp } from "../../courses/hooks/useCountUp";
+import { useCountUp } from "../../shared/useCountUp";
 
 interface StatPillProps {
   icon: LucideIcon;

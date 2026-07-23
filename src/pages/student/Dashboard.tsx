@@ -9,9 +9,9 @@ import { useEnrollmentMutations } from "../../courses/hooks/useEnrollmentMutatio
 import { useCourses } from "../../courses/hooks/useCourses";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 import type { MyLearningItem } from "../../types/enrollment.types";
-import ContinueLearningCard from "../../features/auth/context/courses/components/student/ContinueLearningCard";
+import ContinueLearningCard from "../../features/courses/components/student/ContinueLearningCard";
 import StatPill from "../../components/common/StatPill";
-import CourseRail from "../../features/auth/context/courses/components/student/CourseRail";
+import CourseRail from "../../features/courses/components/student/CourseRail";
 
 const gridVariants = staggerContainer(0.08, 0.05);
 

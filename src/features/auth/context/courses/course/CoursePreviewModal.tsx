@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import { FileText, Play, PlayCircle, Sparkles, Video, X } from "lucide-react";
-import type { Lecture } from "../../../../../courses/types/course.types";
+import type { Lecture } from "../types/course.types";
 import { getEmbedUrl, isDirectVideoFile } from "../../../../../utils/video";
 
 interface PreviewLecture extends Lecture {
