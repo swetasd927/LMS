@@ -1,5 +1,5 @@
-import type { CoursesApi } from "../../../../../types/api.types";
-import { USE_MOCK_API } from "../../../../../config/env";
+import type { CoursesApi } from "../../../types/api.types";
+import { USE_MOCK_API } from "../../../config/env";
 import { mockCoursesAdapter } from "./mockCoursesAdapter";
 import { httpCoursesAdapter } from "./httpCoursesAdapter";
 

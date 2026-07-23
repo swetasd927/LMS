@@ -19,10 +19,10 @@ import {
 
 import { message } from "antd";
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useEnrollmentMutations } from "../../features/auth/context/courses/hooks/useEnrollmentMutations";
+import { useEnrollmentMutations } from "../../features/courses/hooks/useEnrollmentMutations";
 import StarRating from "../../features/courses/components/course/starRating";
 import { getCourseStats, getSectionStats } from "../../utils/duration";
-import { useCourse } from "../../features/auth/context/courses/hooks/useCourse";
+import { useCourse } from "../../features/courses/hooks/useCourse";
 import CoursePreviewModal from "../../features/courses/components/course/CoursePreviewModal";
 
 const CourseDetails = () => {

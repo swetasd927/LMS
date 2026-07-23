@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { BookOpen, ChevronUp, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useCourses } from "../../features/auth/context/courses/hooks/useCourses";
-import { useCourseMutations } from "../../features/auth/context/courses/hooks/useCourseMutation";
+import { useCourses } from "../../features/courses/hooks/useCourses";
+import { useCourseMutations } from "../../features/courses/hooks/useCourseMutation";
 import type { Course } from "../../features/courses/types/course.types";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 import CourseBuilder from "./CourseBuilder";

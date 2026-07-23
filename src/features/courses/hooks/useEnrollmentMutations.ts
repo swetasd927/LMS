@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { enrollmentService } from "../../../../../services/enrollment.services";
+import { enrollmentService } from "../../../services/enrollment.services";
 
 export function useEnrollmentMutations() {
   const [enrolling, setEnrolling] = useState(false);
