@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Clock, PlayCircle, Sparkles } from "lucide-react";
-import type { Course } from "../../../../../../courses/types/course.types";
-import StarRating from "../../course/starRating";
-import { hoverLiftTransition } from "../../../../../../animations/variants";
+import type { Course } from "../../../auth/context/courses/types/course.types";
+import StarRating from "../../../auth/context/courses/course/starRating";
+import { hoverLiftTransition } from "../../../../animations/variants";
 
 interface RelatedCourseCardProps {
   course: Course;

@@ -8,8 +8,8 @@ import {
   PlayCircle,
 } from "lucide-react";
 
-import type { MyLearningItem } from "../../../../../../types/enrollment.types";
-import { hoverLiftTransition } from "../../../../../../animations/variants";
+import type { MyLearningItem } from "../../../../types/enrollment.types";
+import { hoverLiftTransition } from "../../../../animations/variants";
 
 interface ProgressRingProps {
   percent: number;

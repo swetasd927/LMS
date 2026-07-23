@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { MyLearningItem } from "../../types/enrollment.types";
-import { coursesService } from "../types/services/courses.services";
+import { coursesService } from "../infrastructure/courses.services";
 import { enrollmentService } from "../../services/enrollment.services";
 import { getCourseStats } from "../../utils/duration";
 

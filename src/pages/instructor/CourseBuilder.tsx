@@ -6,10 +6,10 @@ import { BookOpen, Plus } from "lucide-react";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import { useCourseMutations } from "../../courses/types/hooks/useCourseMutation";
 import { COURSE_CATEGORIES, COURSE_LEVELS } from "../../data/courseOptions.data";
-import type { Course, CreateLectureInput, UpdateCourseInput } from "../../courses/types/course.types";
+import type { Course, CreateLectureInput, UpdateCourseInput } from "../../features/auth/context/courses/types/course.types";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
-import ThumbnailPicker from "../../features/auth/context/courses/components/instructor/ThumbnailPicker";
-import SectionCard from "../../features/auth/context/courses/components/instructor/SectionCard";
+import ThumbnailPicker from "../../features/courses/components/instructor/ThumbnailPicker";
+import SectionCard from "../../features/courses/components/instructor/SectionCard";
 
 const listVariants = staggerContainer(0.06, 0);
 
