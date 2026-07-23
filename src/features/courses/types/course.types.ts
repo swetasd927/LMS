@@ -76,6 +76,17 @@ export interface CreateDayInput {
   dayNumber?: number;
   description?: string;
 }
+
+export interface MyLearningItem {
+  enrollmentId: string;
+  course: Course; 
+  completedCount: number;
+  totalLectures: number;
+  progressPercent: number;
+  completedLectureIds: string[];
+  lastAccessedAt?: string;
+}
+
 export type UpdateDayInput = Partial<CreateDayInput>;
 
 
