@@ -1,4 +1,4 @@
-import type { Course } from "../features/auth/context/courses/types/course.types";
+import type { Course } from "../features/courses/types/course.types";
 
 /** Shared category list:used by course creation forms and filters. */
 export const COURSE_CATEGORIES = [

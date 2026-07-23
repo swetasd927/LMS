@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
-import type { Course } from "../../../auth/context/courses/types/course.types";
+import type { Course } from "../../types/course.types";
 import { fadeInUp, staggerContainer } from "../../../../animations/variants";
 import RelatedCourseCard from "./RelatedCourseCard";
 

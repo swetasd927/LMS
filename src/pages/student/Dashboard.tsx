@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { BookOpen, Clock, Compass, GraduationCap } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useEnrollments } from "../../courses/hooks/useEnrollment";
-import { useEnrollmentMutations } from "../../courses/hooks/useEnrollmentMutations";
-import { useCourses } from "../../courses/hooks/useCourses";
+import { useEnrollments } from "../../features/auth/context/courses/hooks/useEnrollment";
+import { useEnrollmentMutations } from "../../features/auth/context/courses/hooks/useEnrollmentMutations";
+import { useCourses } from "../../features/auth/context/courses/hooks/useCourses";
+
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 import type { MyLearningItem } from "../../types/enrollment.types";
 import ContinueLearningCard from "../../features/courses/components/student/ContinueLearningCard";

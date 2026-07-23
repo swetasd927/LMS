@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Input, Popconfirm } from "antd";
 import { Check, ChevronDown, Plus, Trash2, X } from "lucide-react";
-import type { CourseDay, CreateLectureInput, Lecture } from "../../../auth/context/courses/types/course.types";
+import type { CourseDay, CreateLectureInput, Lecture } from "../../types/course.types";
 import LectureRow from "./LectureRow";
 
 interface SectionCardProps {
