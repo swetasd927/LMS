@@ -1,4 +1,4 @@
-import type { CourseDay, Lecture } from "../types/course.types";
+import type { CourseDay, Lecture } from "../courses/types/course.types";
 
 /** "10:44" -> 644 (seconds) */
 export const parseDuration = (duration: string): number => {

@@ -8,7 +8,7 @@ import type {
   UpdateCourseInput,
   UpdateDayInput,
   UpdateLectureInput,
-} from "./course.types";
+} from "../courses/types/course.types";
 
 import type { Enrollment } from "./enrollment.types";
 

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import type { Course } from "../../types/course.types";
+import type { Course } from "../../../../../courses/types/course.types";
 import StarRating from "./starRating";
-import { fadeInUp, hoverLiftTransition } from "../../animations/variants";
+import { fadeInUp, hoverLiftTransition } from "../../../../../animations/variants";
 
 interface CourseCardProps {
   course: Course;

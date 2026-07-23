@@ -1,6 +1,6 @@
-import type { CoursesApi } from "../../../types/api.types";
-import type { Course, CourseDay, Lecture } from "../../../types/course.types";
-import { MOCK_LATENCY_MS } from "../../../config/env";
+import type { CoursesApi } from "../../../../../types/api.types";
+import type { Course, CourseDay, Lecture } from "../../../course.types";
+import { MOCK_LATENCY_MS } from "../../../../../config/env";
 import { generateId, mockDb } from "./db";
 
 const delay = (ms = MOCK_LATENCY_MS) => new Promise((r) => setTimeout(r, ms));
