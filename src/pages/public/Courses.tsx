@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Select } from "antd";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import CourseCard from "../../features/courses/components/course/CourseCard";
-import { useCourses } from "../../features/auth/context/courses/hooks/useCourses";
+import { useCourses } from "../../features/courses/hooks/useCourses";
 
 const Courses = () => {
   const { courses, loading, error } = useCourses();

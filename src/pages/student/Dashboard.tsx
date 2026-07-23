@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { BookOpen, Clock, Compass, GraduationCap } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useEnrollments } from "../../features/auth/context/courses/hooks/useEnrollment";
-import { useEnrollmentMutations } from "../../features/auth/context/courses/hooks/useEnrollmentMutations";
-import { useCourses } from "../../features/auth/context/courses/hooks/useCourses";
+import { useEnrollments } from "../../features/courses/hooks/useEnrollment";
+import { useEnrollmentMutations } from "../../features/courses/hooks/useEnrollmentMutations";
+import { useCourses } from "../../features/courses/hooks/useCourses";
 
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 import type { MyLearningItem } from "../../types/enrollment.types";

@@ -5,7 +5,7 @@ import { courseKeys } from "./queryKeys.ts";
 import type { 
   CreateCourseInput, CreateDayInput, CreateLectureInput,
   UpdateCourseInput, UpdateDayInput, UpdateLectureInput 
-} from "../../../../courses/types/course.types.ts";
+} from "../types/course.types.ts";
 
 export function useCourseMutations() {
   const qc = useQueryClient();

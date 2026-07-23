@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Plus } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useCourseMutations } from "../../features/auth/context/courses/hooks/useCourseMutation";
+import { useCourseMutations } from "../../features/courses/hooks/useCourseMutation";
 import { COURSE_CATEGORIES, COURSE_LEVELS } from "../../data/courseOptions.data";
 import type { Course, CreateLectureInput, UpdateCourseInput } from "../../features/courses/types/course.types";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
