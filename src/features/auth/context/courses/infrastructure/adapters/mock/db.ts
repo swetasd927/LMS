@@ -1,5 +1,5 @@
-import type { Course } from "../../../../features/auth/context/courses/types/course.types";
-import { courses as seedCourses } from "../../../../data/courses.data";
+import type { Course } from "../../../../../../courses/types/course.types";
+import { courses as seedCourses } from "../../../../../../../data/courses.data";
 
 const STORAGE_KEY = "lms_db_v2";
 interface Db {

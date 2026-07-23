@@ -1,8 +1,8 @@
-import CourseCard from "../../features/auth/context/courses/course/CourseCard";
+import CourseCard from "../../features/courses/components/course/CourseCard";
 import BecomeInstructor from "../../components/home/BecomeInstructor";
 import Categories from "../../components/home/Categories";
 import Hero from "../../components/home/Hero";
-import { useCourses } from "../../courses/hooks/useCourses";
+import { useCourses } from "../../features/auth/context/courses/hooks/useCourses";
 import { motion, type Variants } from "framer-motion";
 
 const Home = () => {

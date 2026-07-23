@@ -8,7 +8,7 @@ import type {
   UpdateCourseInput,
   UpdateDayInput,
   UpdateLectureInput,
-} from "../features/auth/context/courses/types/course.types";
+} from "../features/courses/types/course.types";
 
 import type { Enrollment } from "./enrollment.types";
 

@@ -1,4 +1,4 @@
-import type { Course } from "../features/auth/context/courses/types/course.types";
+import type { Course } from "../features/courses/types/course.types";
 
 const rawCourses = [
   {

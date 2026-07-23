@@ -19,12 +19,11 @@ import {
 
 import { message } from "antd";
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useEnrollmentMutations } from "../../courses/hooks/useEnrollmentMutations";
-
-import StarRating from "../../features/auth/context/courses/course/starRating";
+import { useEnrollmentMutations } from "../../features/auth/context/courses/hooks/useEnrollmentMutations";
+import StarRating from "../../features/courses/components/course/starRating";
 import { getCourseStats, getSectionStats } from "../../utils/duration";
-import { useCourse } from "../../courses/types/hooks/useCourse";
-import CoursePreviewModal from "../../features/auth/context/courses/course/CoursePreviewModal";
+import { useCourse } from "../../features/auth/context/courses/hooks/useCourse";
+import CoursePreviewModal from "../../features/courses/components/course/CoursePreviewModal";
 
 const CourseDetails = () => {
   const { id } = useParams<{ id: string }>();
