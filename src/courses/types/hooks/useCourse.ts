@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { coursesService } from "../../../services/courses.services";
-import { courseKeys } from "../../../hooks/queryKeys";
+import { coursesService } from "../services/courses.services";
+import { courseKeys } from "./queryKeys";
 
 //read single courses through react query
 export function useCourse(id: string | undefined) {

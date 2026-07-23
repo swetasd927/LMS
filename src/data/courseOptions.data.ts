@@ -1,4 +1,4 @@
-import type { Course } from "../types/course.types";
+import type { Course } from "../courses/types/course.types";
 
 /** Shared category list:used by course creation forms and filters. */
 export const COURSE_CATEGORIES = [

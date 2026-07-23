@@ -1,7 +1,7 @@
 import type { EnrollmentApi } from "../../../types/api.types";
 import type { Enrollment } from "../../../types/enrollment.types";
 import { MOCK_LATENCY_MS } from "../../../config/env";
-import { generateId } from "./db";
+import { generateId } from "../../../courses/types/services/adapters/mock/db";
 import { enrollmentDb } from "./enrollmentDb";
 
 const delay = (ms = MOCK_LATENCY_MS) => new Promise((r) => setTimeout(r, ms));

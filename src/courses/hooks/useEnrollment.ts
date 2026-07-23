@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import type { MyLearningItem } from "../types/enrollment.types";
-import { coursesService } from "../services/courses.services";
-import { enrollmentService } from "../services/enrollment.services";
-import { getCourseStats } from "../utils/duration";
+import type { MyLearningItem } from "../../types/enrollment.types";
+import { coursesService } from "../types/services/courses.services";
+import { enrollmentService } from "../../services/enrollment.services";
+import { getCourseStats } from "../../utils/duration";
 
 interface UseEnrollmentsResult {
   items: MyLearningItem[];

@@ -4,8 +4,8 @@ import { Check, Clock, FileText, Link2, Pencil, Trash2, Video, X } from "lucide-
 import ReactQuill from "react-quill-new";
 import DOMPurify from "dompurify";
 import "react-quill-new/dist/quill.snow.css";
-import type { CreateLectureInput, Lecture } from "../../types/course.types";
-import { LECTURE_TYPES } from "../../data/courseOptions.data";
+import type { CreateLectureInput, Lecture } from "../../../../../../courses/types/course.types";
+import { LECTURE_TYPES } from "../../../../../../data/courseOptions.data";
 
 /** Toolbar kept intentionally small — this is a lecture description, not a blog post. */
 const DESCRIPTION_MODULES = {

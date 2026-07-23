@@ -1,6 +1,6 @@
-import type { CoursesApi, ApiResponse } from "../../../types/api.types";
-import { httpClient } from "../http/httpClient";
-import type { Course, CourseDay, Lecture } from "../../../types/course.types";
+import type { CoursesApi, ApiResponse } from "../../../../../types/api.types";
+import { httpClient } from "../../../../../services/adapters/http/httpClient";
+import type { Course, CourseDay, Lecture } from "../../../course.types";
 
 export const httpCoursesAdapter: CoursesApi = {
   async getAll(filters) {

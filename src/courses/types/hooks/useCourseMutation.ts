@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { coursesService } from "../services/courses.services";
+import { coursesService } from "../services/courses.services.ts";
 
 import { courseKeys } from "./queryKeys.ts";
 import type { 
   CreateCourseInput, CreateDayInput, CreateLectureInput,
   UpdateCourseInput, UpdateDayInput, UpdateLectureInput 
-} from "../types/course.types";
+} from "../course.types.ts";
 
 export function useCourseMutations() {
   const qc = useQueryClient();

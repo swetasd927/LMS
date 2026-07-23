@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Course } from "../types/course.types";
-import { coursesService } from "../services/courses.services";
+import { coursesService } from "../types/services/courses.services";
 
 
 

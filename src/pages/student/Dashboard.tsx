@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 import { BookOpen, Clock, Compass, GraduationCap } from "lucide-react";
 
 import { useAuth } from "../../features/auth/hooks/useAuth";
-import { useEnrollments } from "../../hooks/useEnrollment";
-import { useEnrollmentMutations } from "../../hooks/useEnrollmentMutations";
-import { useCourses } from "../../hooks/useCourses";
+import { useEnrollments } from "../../courses/hooks/useEnrollment";
+import { useEnrollmentMutations } from "../../courses/hooks/useEnrollmentMutations";
+import { useCourses } from "../../courses/hooks/useCourses";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 import type { MyLearningItem } from "../../types/enrollment.types";
-import ContinueLearningCard from "./ContinueLearningCard";
-import StatPill from "./StatPill";
-import CourseRail from "./CourseRail";
+import ContinueLearningCard from "../../features/auth/context/courses/components/student/ContinueLearningCard";
+import StatPill from "../../components/common/StatPill";
+import CourseRail from "../../features/auth/context/courses/components/student/CourseRail";
 
 const gridVariants = staggerContainer(0.08, 0.05);
 
