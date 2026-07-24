@@ -84,7 +84,7 @@ export interface MyLearningItem {
   totalLectures: number;
   progressPercent: number;
   completedLectureIds: string[];
-  lastAccessedAt?: string;
+  lastAccessedAt: string;
 }
 
 export type UpdateDayInput = Partial<CreateDayInput>;

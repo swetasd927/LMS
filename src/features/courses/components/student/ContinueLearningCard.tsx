@@ -8,7 +8,7 @@ import {
   PlayCircle,
 } from "lucide-react";
 
-import type { MyLearningItem } from "../../../../types/enrollment.types";
+import type { MyLearningItem } from "../../types/course.types";
 import { hoverLiftTransition } from "../../../../animations/variants";
 
 interface ProgressRingProps {
