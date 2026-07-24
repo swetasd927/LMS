@@ -246,9 +246,9 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
   ];
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
       {/* Step tabs */}
-      <div className="flex items-center gap-1 border-b border-gray-100 px-3">
+      <div className="flex items-center gap-1 border-b border-gray-100 px-3 dark:border-gray-800">
         {steps.map((s) => {
           const locked = s.key !== "info" && !courseId;
           return (
@@ -260,10 +260,10 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               title={locked ? "Save the basic info first" : undefined}
               className={`relative px-4 py-3 text-sm font-medium transition-colors ${
                 locked
-                  ? "cursor-not-allowed text-gray-300"
+                  ? "cursor-not-allowed text-gray-300 dark:text-gray-700"
                   : step === s.key
-                    ? "text-indigo-600"
-                    : "text-gray-500 hover:text-gray-800"
+                    ? "text-indigo-600 dark:text-indigo-400"
+                    : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
               }`}
             >
               {s.label}
@@ -282,7 +282,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
         {step === "info" && (
           <div className="space-y-5">
             <div>
-              <p className="mb-1.5 text-sm font-medium text-gray-700">Title</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Title</p>
               <Input
                 placeholder="Complete React Bootcamp"
                 value={info.title}
@@ -290,7 +290,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               />
             </div>
             <div>
-              <p className="mb-1.5 text-sm font-medium text-gray-700">Subtitle</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Subtitle</p>
               <Input
                 placeholder="Build production-ready apps with React"
                 value={info.subtitle}
@@ -298,7 +298,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               />
             </div>
             <div>
-              <p className="mb-1.5 text-sm font-medium text-gray-700">Description</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Description</p>
               <Input.TextArea
                 rows={3}
                 placeholder="What will students learn?"
@@ -308,7 +308,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
             </div>
             <div className="grid grid-cols-2 gap-5">
               <div>
-                <p className="mb-1.5 text-sm font-medium text-gray-700">Category</p>
+                <p className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Category</p>
                 <Select
                   className="w-full"
                   placeholder="Select category"
@@ -318,7 +318,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
                 />
               </div>
               <div>
-                <p className="mb-1.5 text-sm font-medium text-gray-700">Level</p>
+                <p className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Level</p>
                 <Select
                   className="w-full"
                   placeholder="Select level"
@@ -329,7 +329,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               </div>
             </div>
             <div>
-              <p className="mb-1.5 text-sm font-medium text-gray-700">Language</p>
+              <p className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Language</p>
               <Input
                 placeholder="English"
                 value={info.language}
@@ -359,12 +359,12 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
         {step === "curriculum" && courseId && (
           <div className="space-y-3">
             <div>
-              <h3 className="text-base font-semibold text-gray-800">Curriculum</h3>
-              <p className="text-sm text-gray-500">
+              <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100">Curriculum</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Start putting together your course by creating sections, lectures, and quizzes.
               </p>
               {sections.length > 0 && (
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
                   {sections.length} section{sections.length === 1 ? "" : "s"} • {totalLectures}{" "}
                   lecture{totalLectures === 1 ? "" : "s"}
                 </p>
@@ -372,9 +372,9 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
             </div>
 
             {sections.length === 0 && (
-              <div className="rounded-xl border border-dashed border-gray-300 p-10 text-center">
-                <BookOpen className="mx-auto mb-2 text-gray-300" size={28} />
-                <p className="text-sm text-gray-500">
+              <div className="rounded-xl border border-dashed border-gray-300 p-10 text-center dark:border-gray-700">
+                <BookOpen className="mx-auto mb-2 text-gray-300 dark:text-gray-700" size={28} />
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   No sections yet. Add your first section to start building the curriculum.
                 </p>
               </div>
@@ -402,7 +402,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
             <button
               type="button"
               onClick={handleAddSection}
-              className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-gray-300 py-3 text-sm font-medium text-gray-500 transition-colors hover:border-indigo-400 hover:text-indigo-600"
+              className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-gray-300 py-3 text-sm font-medium text-gray-500 transition-colors hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-700 dark:text-gray-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
             >
               <Plus size={16} /> Add section
             </button>
@@ -412,7 +412,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
         {step === "details" && courseId && (
           <div className="space-y-5">
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">What students will learn</p>
+              <p className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">What students will learn</p>
               <Select
                 mode="tags"
                 className="w-full"
@@ -423,7 +423,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               />
             </div>
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Requirements</p>
+              <p className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Requirements</p>
               <Select
                 mode="tags"
                 className="w-full"
@@ -434,7 +434,7 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
               />
             </div>
             <div>
-              <p className="mb-1 text-sm font-medium text-gray-700">Topics covered</p>
+              <p className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Topics covered</p>
               <Select
                 mode="tags"
                 className="w-full"
@@ -453,12 +453,12 @@ const CourseBuilder = ({ course, onClose }: CourseBuilderProps) => {
         )}
       </div>
 
-      <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
+      <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4 dark:border-gray-800">
         <div>
           {courseId && (
             <span
               className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${
-                status === "published" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+                status === "published" ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400" : "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400"
               }`}
             >
               {status}

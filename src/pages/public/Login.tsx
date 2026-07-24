@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-6">
-      <div className="w-full max-w-md rounded-2xl border bg-white p-8 shadow-sm">
+      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <h1 className="mb-6 text-center text-3xl font-bold">Login</h1>
 
         <Form layout="vertical" onFinish={onFinish}>

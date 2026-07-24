@@ -38,7 +38,7 @@ const Courses = () => {
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
       <h1 className="mb-2 text-4xl font-bold">Explore Courses</h1>
-      <p className="mb-8 text-gray-500">
+      <p className="mb-8 text-gray-500 dark:text-gray-400">
         {loading
           ? "Loading courses..."
           : `${filteredCourses.length} courses available`}
@@ -52,8 +52,8 @@ const Courses = () => {
               onClick={() => setActiveCategory(category)}
               className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
                 activeCategory === category
-                  ? "border-slate-900 bg-slate-900 text-white"
-                  : "border-gray-300 text-gray-700 hover:border-slate-400"
+                  ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
+                  : "border-gray-300 text-gray-700 hover:border-slate-400 dark:border-gray-700 dark:text-gray-300 dark:hover:border-slate-500"
               }`}
             >
               {category}
@@ -73,14 +73,14 @@ const Courses = () => {
         />
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {loading ? (
         <div className="grid gap-6 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="h-64 animate-pulse rounded-lg bg-gray-100"
+              className="h-64 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800"
             />
           ))}
         </div>

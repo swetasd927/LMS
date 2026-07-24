@@ -7,7 +7,6 @@ import "react-quill-new/dist/quill.snow.css";
 import type { CreateLectureInput, Lecture } from "../../types/course.types";
 import { LECTURE_TYPES } from "../../../../data/courseOptions.data";
 
-/** Toolbar kept intentionally small — this is a lecture description, not a blog post. */
 const DESCRIPTION_MODULES = {
   toolbar: [
     ["bold", "italic", "underline", "strike"],
@@ -102,7 +101,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
   // Read-only row (existing lecture, not being edited)
   if (!editing && lecture) {
     return (
-      <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
+      <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 dark:border-gray-800 dark:bg-gray-800/60">
         <div className="flex min-w-0 items-center gap-2">
           {lecture.type === "video" ? (
             <Video size={16} className="shrink-0 text-indigo-500" />
@@ -110,14 +109,14 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
             <FileText size={16} className="shrink-0 text-indigo-500" />
           )}
           <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-gray-800">{lecture.title}</p>
+            <p className="truncate text-sm font-medium text-gray-800 dark:text-gray-100">{lecture.title}</p>
             <div className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
               <span className="flex shrink-0 items-center gap-1 text-xs text-gray-400">
                 <Clock size={11} />
                 {lecture.duration || "0:00"}
               </span>
               {lecture.isPreview && (
-                <span className="shrink-0 rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-purple-700">
+                <span className="shrink-0 rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-purple-700 dark:bg-purple-900/50 dark:text-purple-300">
                   Preview
                 </span>
               )}
@@ -147,7 +146,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
 
   // Add / edit form
   return (
-    <div className="space-y-4 rounded-lg border border-indigo-200 bg-indigo-50/40 p-3">
+    <div className="space-y-4 rounded-lg border border-indigo-200 bg-indigo-50/40 p-3 dark:border-indigo-900 dark:bg-indigo-950/30">
       <div className="flex gap-8">
         <Input
           autoFocus
@@ -212,7 +211,7 @@ const LectureRow = ({ lecture, saving, onSave, onDelete, onCancelAdd }: LectureR
           onChange={(e) => setForm((f) => ({ ...f, isPreview: e.target.checked }))}
           className="mt-1.5"
         >
-          <span className="text-sm text-gray-600">Free preview</span>
+          <span className="text-sm text-gray-600 dark:text-gray-300">Free preview</span>
         </Checkbox>
       </div>
 

@@ -31,9 +31,9 @@ const SectionCard = ({
   const lectures = section.lectures.slice().sort((a, b) => a.order - b.order);
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white">
+    <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
       <div className="flex items-center gap-2 px-4 py-3">
-        <button type="button" onClick={() => setCollapsed((c) => !c)} className="shrink-0 text-gray-400 hover:text-gray-600">
+        <button type="button" onClick={() => setCollapsed((c) => !c)} className="shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <ChevronDown size={16} className={`transition-transform ${collapsed ? "-rotate-90" : ""}`} />
         </button>
 
@@ -45,7 +45,7 @@ const SectionCard = ({
             <Button size="small" type="text" icon={<X size={14} />} onClick={() => { setTitleDraft(section.title); setEditingTitle(false); }} />
           </div>
         ) : (
-          <button type="button" className="flex-1 truncate text-left text-sm font-semibold text-gray-800 hover:text-indigo-600" onClick={() => setEditingTitle(true)}>
+          <button type="button" className="flex-1 truncate text-left text-sm font-semibold text-gray-800 hover:text-indigo-600 dark:text-gray-100 dark:hover:text-indigo-400" onClick={() => setEditingTitle(true)}>
             <span className="text-gray-400">Section {index + 1}: </span>
             {section.title}
           </button>
@@ -61,7 +61,7 @@ const SectionCard = ({
       </div>
 
       {!collapsed && (
-        <div className="space-y-2 border-t border-gray-100 px-4 py-3">
+        <div className="space-y-2 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
           {lectures.map((lecture: Lecture) => (
             <LectureRow
               key={lecture.id}
@@ -80,7 +80,7 @@ const SectionCard = ({
             <button
               type="button"
               onClick={() => setAddingLecture(true)}
-              className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-gray-300 py-2 text-sm text-gray-500 transition-colors hover:border-indigo-400 hover:text-indigo-600"
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-gray-300 py-2 text-sm text-gray-500 transition-colors hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-700 dark:text-gray-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
             >
               <Plus size={14} /> Add lecture
             </button>

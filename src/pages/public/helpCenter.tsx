@@ -48,9 +48,9 @@ const HelpCenter = () => {
       {/* FAQ list */}
       <div className="mx-auto max-w-4xl px-6 py-12">
         {filteredCategories.length === 0 ? (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-gray-500 dark:text-gray-400">
             No results for "{query}". Try a different search, or{" "}
-            <Link to="/contact-us" className="text-indigo-600 underline">
+            <Link to="/contact-us" className="text-indigo-600 underline dark:text-indigo-400">
               contact us
             </Link>{" "}
             directly.
@@ -66,7 +66,7 @@ const HelpCenter = () => {
                     <span className="font-medium">{item.question}</span>
                   ),
                   children: (
-                    <p className="text-sm leading-relaxed text-gray-600">
+                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
                       {item.answer}
                     </p>
                   ),
@@ -76,9 +76,9 @@ const HelpCenter = () => {
           ))
         )}
 
-        <div className="mt-16 rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
+        <div className="mt-16 rounded-lg border border-gray-200 bg-gray-50 p-8 text-center dark:border-gray-800 dark:bg-gray-900">
           <h3 className="text-lg font-bold">Still need help?</h3>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
             Can't find what you're looking for? Our support team is happy to
             help.
           </p>

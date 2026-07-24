@@ -52,7 +52,7 @@ const Categories = () => {
           {categories.map((category) => (
             <motion.div
               key={category}
-              className="rounded-xl border p-8"
+              className="rounded-xl border border-gray-200 p-8 dark:border-gray-800"
               variants={cardVariants}
               whileHover={{ y: -4, boxShadow: "0 8px 20px rgba(0,0,0,0.08)" }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}

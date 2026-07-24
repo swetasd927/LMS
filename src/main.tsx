@@ -8,6 +8,8 @@ import { router } from "./app/router";
 import "./index.css";
 import "antd/dist/reset.css";
 import AuthProvider from "./features/auth/providers/AuthProvider";
+import ThemeProvider from "./features/theme/providers/ThemeProvider";
+import AntdThemeBridge from "./features/theme/components/AntdThemeBridge";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,9 +24,13 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <ThemeProvider>
+        <AntdThemeBridge>
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </AntdThemeBridge>
+      </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );

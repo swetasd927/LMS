@@ -12,8 +12,6 @@ interface RelatedCourseCardProps {
 
 const MotionLink = motion.create(Link);
 const SIXTY_DAYS_MS = 1000 * 60 * 60 * 24 * 60;
-
-// Read once at module-evaluation time (import time), not during render.
 const NOW_MS = Date.now();
 
 const RelatedCourseCard = ({ course }: RelatedCourseCardProps) => {
@@ -27,9 +25,9 @@ const RelatedCourseCard = ({ course }: RelatedCourseCardProps) => {
       to={`/course/${course.id}`}
       whileHover={{ y: -6 }}
       transition={hoverLiftTransition}
-      className="group relative block w-65 shrink-0 snap-start overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-xl hover:shadow-indigo-200/50 sm:w-68"
+      className="group relative block w-65 shrink-0 snap-start overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-xl hover:shadow-indigo-200/50 sm:w-68 dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
     >
-      <div className="relative h-36 w-full overflow-hidden bg-slate-200">
+      <div className="relative h-36 w-full overflow-hidden bg-slate-200 dark:bg-gray-800">
         <img
           src={course.thumbnail}
           alt={course.title}
@@ -54,29 +52,29 @@ const RelatedCourseCard = ({ course }: RelatedCourseCardProps) => {
         </div>
       </div>
       <div className="p-3.5">
-        <h3 className="line-clamp-2 min-h-10 text-sm font-bold leading-snug text-[#1c1d1f]">
+        <h3 className="line-clamp-2 min-h-10 text-sm font-bold leading-snug text-[#1c1d1f] dark:text-gray-100">
           {course.title}
         </h3>
-        <p className="mt-1 text-xs text-gray-500">{course.instructor.name}</p>
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{course.instructor.name}</p>
         <div className="mt-1.5 flex items-center gap-1">
-          <span className="text-sm font-bold text-[#b4690e]">
+          <span className="text-sm font-bold text-[#b4690e] dark:text-[#e0a24d]">
             {course.rating}
           </span>
           <StarRating rating={course.rating} size={12} />
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             ({course.ratingCount.toLocaleString()})
           </span>
         </div>
-        <div className="mt-1.5 flex items-center gap-1.5 text-xs text-gray-500">
+        <div className="mt-1.5 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
           <Clock size={12} />
           <span>{course.level}</span>
         </div>
         <div className="mt-2 flex items-center gap-2">
-          <span className="text-base font-bold text-[#1c1d1f]">
+          <span className="text-base font-bold text-[#1c1d1f] dark:text-gray-100">
             Rs. {course.price.toLocaleString()}
           </span>
           {course.originalPrice && (
-            <span className="text-xs text-gray-500 line-through">
+            <span className="text-xs text-gray-500 line-through dark:text-gray-500">
               Rs. {course.originalPrice.toLocaleString()}
             </span>
           )}
