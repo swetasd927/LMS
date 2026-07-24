@@ -43,8 +43,8 @@ const InstructorDashboard = () => {
     <div className="mx-auto max-w-7xl px-6 py-10">
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">My Courses</h1>
-          <p className="mt-1 text-gray-500">Create courses, then add sections and lecture videos.</p>
+          <h1 className="text-3xl font-bold dark:text-gray-100">My Courses</h1>
+          <p className="mt-1 text-gray-500 dark:text-gray-400">Create courses, then add sections and lecture videos.</p>
         </div>
         <Button
           type="primary"
@@ -76,34 +76,34 @@ const InstructorDashboard = () => {
       {loading && (
         <div className="grid gap-6 md:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-40 animate-pulse rounded-xl bg-gray-100" />
+            <div key={i} className="h-40 animate-pulse rounded-xl bg-gray-100 dark:bg-gray-800" />
           ))}
         </div>
       )}
 
       {!loading && courses.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-gray-300 p-16 text-center">
-          <BookOpen className="mx-auto mb-4 text-gray-300" size={40} />
-          <h2 className="text-lg font-semibold text-gray-700">No courses yet</h2>
-          <p className="mt-1 text-sm text-gray-500">Create your first course to start adding sections and lectures.</p>
+        <div className="rounded-2xl border border-dashed border-gray-300 p-16 text-center dark:border-gray-700">
+          <BookOpen className="mx-auto mb-4 text-gray-300 dark:text-gray-700" size={40} />
+          <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">No courses yet</h2>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Create your first course to start adding sections and lectures.</p>
         </div>
       )}
 
       {!loading && courses.length > 0 && (
         <motion.div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" variants={gridVariants} initial="hidden" animate="show">
           {courses.map((course) => (
-            <motion.div key={course.id} variants={fadeInUp} className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
+            <motion.div key={course.id} variants={fadeInUp} className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
               <div>
                 <div className="mb-2 flex items-center justify-between gap-2">
-                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${course.status === "published" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${course.status === "published" ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400" : "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400"}`}>
                     {course.status}
                   </span>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-gray-400 dark:text-gray-500">
                     {course.days.length} section{course.days.length === 1 ? "" : "s"}
                   </span>
                 </div>
-                <h3 className="line-clamp-2 text-base font-bold text-[#1c1d1f]">{course.title}</h3>
-                <p className="mt-1 line-clamp-2 text-sm text-gray-500">{course.subtitle}</p>
+                <h3 className="line-clamp-2 text-base font-bold text-[#1c1d1f] dark:text-gray-100">{course.title}</h3>
+                <p className="mt-1 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">{course.subtitle}</p>
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2">

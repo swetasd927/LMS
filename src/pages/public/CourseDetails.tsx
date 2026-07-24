@@ -95,7 +95,7 @@ const CourseDetails = () => {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-7xl px-6 py-20 text-center text-gray-500">
+      <div className="mx-auto max-w-7xl px-6 py-20 text-center text-gray-500 dark:text-gray-400">
         Loading course...
       </div>
     );
@@ -105,7 +105,7 @@ const CourseDetails = () => {
     return (
       <div className="mx-auto max-w-7xl px-6 py-20 text-center">
         <h1 className="text-2xl font-bold">Course not found</h1>
-        <Link to="/courses" className="mt-4 inline-block text-blue-600">
+        <Link to="/courses" className="mt-4 inline-block text-blue-600 dark:text-blue-400">
           Back to all courses
         </Link>
       </div>
@@ -188,14 +188,14 @@ const CourseDetails = () => {
       <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="grid gap-12 lg:grid-cols-3">
           <div className="order-2 min-w-0 lg:order-1 lg:col-span-2">
-            <section className="rounded-lg border border-gray-300 p-6">
+            <section className="rounded-lg border border-gray-300 p-6 dark:border-gray-700">
               <h2 className="mb-4 text-xl font-bold">What you'll learn</h2>
               <ul className="grid gap-3 sm:grid-cols-2">
                 {course.whatYouWillLearn.map((item, i) => (
                   <li key={i} className="flex gap-2 text-sm">
                     <Check
                       size={18}
-                      className="mt-0.5 shrink-0 text-gray-700"
+                      className="mt-0.5 shrink-0 text-gray-700 dark:text-gray-300"
                     />
                     {item}
                   </li>
@@ -210,14 +210,14 @@ const CourseDetails = () => {
                   onClick={() =>
                     setActiveKeys(allExpanded ? [] : allSectionKeys)
                   }
-                  className="text-sm font-semibold text-blue-600 hover:underline"
+                  className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400"
                 >
                   {allExpanded
                     ? "Collapse all sections"
                     : "Expand all sections"}
                 </button>
               </div>
-              <p className="mb-4 mt-1 text-sm text-gray-500">
+              <p className="mb-4 mt-1 text-sm text-gray-500 dark:text-gray-400">
                 {stats.sectionCount} sections • {stats.lectureCount} lectures •{" "}
                 {stats.duration} total length
               </p>
@@ -235,29 +235,29 @@ const CourseDetails = () => {
                     label: (
                       <div className="flex w-full min-w-0 items-center justify-between gap-3 pr-2">
                         <span className="min-w-0 wrap-break-word font-semibold">{section.title}</span>
-                        <span className="shrink-0 whitespace-nowrap text-xs font-normal text-gray-500">
+                        <span className="shrink-0 whitespace-nowrap text-xs font-normal text-gray-500 dark:text-gray-400">
                           {sectionStats.lectureCount} lectures •{" "}
                           {sectionStats.duration}
                         </span>
                       </div>
                     ),
                     children: (
-                      <ul className="divide-y divide-gray-100">
+                      <ul className="divide-y divide-gray-100 dark:divide-gray-800">
                         {section.lectures.map((lecture) => (
                           <li
                             key={lecture.id}
                             className="flex items-center justify-between gap-3 py-2.5 text-sm"
                           >
-                            <span className="flex min-w-0 items-center gap-2 wrap-break-word text-gray-700">
+                            <span className="flex min-w-0 items-center gap-2 wrap-break-word text-gray-700 dark:text-gray-300">
                               {lecture.type === "video" ? (
                                 <PlayCircle
                                   size={16}
-                                  className="shrink-0 text-gray-400"
+                                  className="shrink-0 text-gray-400 dark:text-gray-500"
                                 />
                               ) : (
                                 <FileText
                                   size={16}
-                                  className="shrink-0 text-gray-400"
+                                  className="shrink-0 text-gray-400 dark:text-gray-500"
                                 />
                               )}
                               {lecture.title}
@@ -267,12 +267,12 @@ const CourseDetails = () => {
                                 <button
                                   type="button"
                                   onClick={() => openPreview(lecture.id)}
-                                  className="cursor-pointer text-xs font-semibold text-purple-700 underline hover:text-purple-900"
+                                  className="cursor-pointer text-xs font-semibold text-purple-700 underline hover:text-purple-900 dark:text-purple-400 dark:hover:text-purple-300"
                                 >
                                   Preview
                                 </button>
                               )}
-                              <span className="text-xs text-gray-500">
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
                                 {lecture.duration}
                               </span>
                             </span>
@@ -287,7 +287,7 @@ const CourseDetails = () => {
 
             <section className="mt-10">
               <h2 className="mb-4 text-xl font-bold">Requirements</h2>
-              <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
+              <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700 dark:text-gray-300">
                 {course.requirements.map((r, i) => (
                   <li key={i}>{r}</li>
                 ))}
@@ -296,22 +296,22 @@ const CourseDetails = () => {
 
             <section className="mt-10">
               <h2 className="mb-4 text-xl font-bold">Description</h2>
-              <p className="text-sm leading-relaxed text-gray-700">
+              <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
                 {course.description}
               </p>
             </section>
 
-            <section className="mt-10 border-t border-gray-200 pt-10">
+            <section className="mt-10 border-t border-gray-200 pt-10 dark:border-gray-800">
               <h2 className="mb-4 text-xl font-bold">Instructor</h2>
               <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1c1d1f] text-xl font-bold text-white">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1c1d1f] text-xl font-bold text-white dark:bg-gray-100 dark:text-[#1c1d1f]">
                   {course.instructor.name.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-lg font-semibold text-blue-600">
+                  <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">
                     {course.instructor.name}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     {course.instructor.title}
                   </p>
                 </div>
@@ -324,7 +324,7 @@ const CourseDetails = () => {
                 {course.topics.map((topic) => (
                   <span
                     key={topic}
-                    className="cursor-pointer rounded-full border border-gray-300 px-4 py-2 text-sm font-medium hover:border-[#1c1d1f]"
+                    className="cursor-pointer rounded-full border border-gray-300 px-4 py-2 text-sm font-medium hover:border-[#1c1d1f] dark:border-gray-700 dark:hover:border-gray-300"
                   >
                     {topic}
                   </span>
@@ -338,7 +338,7 @@ const CourseDetails = () => {
             {/* Sentinel — marks where the card naturally sits before it locks */}
             <div ref={sentinelRef} />
 
-            <div className="sticky top-24 w-full overflow-hidden rounded-lg border border-gray-300 shadow-lg">
+            <div className="sticky top-24 w-full overflow-hidden rounded-lg border border-gray-300 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900">
               {!isStuck && (
                 <div className="relative h-48 w-full">
                   <img
@@ -373,29 +373,29 @@ const CourseDetails = () => {
                     className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
                       purchaseOption === "individual"
                         ? "border-[#5624d0]"
-                        : "border-gray-400"
+                        : "border-gray-400 dark:border-gray-600"
                     }`}
                   >
                     {purchaseOption === "individual" && (
                       <span className="h-2.5 w-2.5 rounded-full bg-[#5624d0]" />
                     )}
                   </span>
-                  <span className="text-base text-[#1c1d1f]">
+                  <span className="text-base text-[#1c1d1f] dark:text-gray-100">
                     Buy individual course
                   </span>
                 </button>
 
                 <div className="mt-3 flex items-center gap-2">
-                  <span className="text-3xl font-bold text-[#1c1d1f]">
+                  <span className="text-3xl font-bold text-[#1c1d1f] dark:text-gray-100">
                     Rs. {course.price.toLocaleString()}
                   </span>
                   {course.originalPrice && (
                     <>
-                      <span className="text-lg text-gray-400 line-through">
+                      <span className="text-lg text-gray-400 line-through dark:text-gray-500">
                         Rs. {course.originalPrice.toLocaleString()}
                       </span>
                       {discount && (
-                        <span className="text-lg text-[#1c1d1f]">
+                        <span className="text-lg text-[#1c1d1f] dark:text-gray-100">
                           {discount}% off
                         </span>
                       )}
@@ -404,17 +404,17 @@ const CourseDetails = () => {
                 </div>
 
                 {discount && (
-                  <p className="mt-1 flex items-center gap-1 text-sm font-semibold text-red-600">
+                  <p className="mt-1 flex items-center gap-1 text-sm font-semibold text-red-600 dark:text-red-400">
                     <Clock size={14} /> 2 days left at this price!
                   </p>
                 )}
 
-                <div className="mt-4 space-y-2 border-t border-gray-200 pt-4">
-                  <p className="flex items-center gap-2 text-sm text-[#1c1d1f]">
+                <div className="mt-4 space-y-2 border-t border-gray-200 pt-4 dark:border-gray-800">
+                  <p className="flex items-center gap-2 text-sm text-[#1c1d1f] dark:text-gray-100">
                     <Percent size={16} />
                     30-day money-back guarantee
                   </p>
-                  <p className="flex items-center gap-2 text-sm text-[#1c1d1f]">
+                  <p className="flex items-center gap-2 text-sm text-[#1c1d1f] dark:text-gray-100">
                     <InfinityIcon size={16} />
                     Full lifetime access
                   </p>
@@ -438,13 +438,13 @@ const CourseDetails = () => {
                 <button
                   type="button"
                   onClick={() => setPurchaseOption("subscribe")}
-                  className="mt-6 flex w-full items-center gap-3 border-t border-gray-200 pt-6 text-left"
+                  className="mt-6 flex w-full items-center gap-3 border-t border-gray-200 pt-6 text-left dark:border-gray-800"
                 >
                   <span
                     className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
                       purchaseOption === "subscribe"
                         ? "border-[#5624d0]"
-                        : "border-gray-400"
+                        : "border-gray-400 dark:border-gray-600"
                     }`}
                   >
                     {purchaseOption === "subscribe" && (
@@ -452,22 +452,22 @@ const CourseDetails = () => {
                     )}
                   </span>
                   <span>
-                    <span className="block text-base text-[#1c1d1f]">
+                    <span className="block text-base text-[#1c1d1f] dark:text-gray-100">
                       Subscribe and save
                     </span>
-                    <span className="block text-base text-[#1c1d1f]">
+                    <span className="block text-base text-[#1c1d1f] dark:text-gray-100">
                       From <span className="font-bold">Rs. 800</span> /month
                     </span>
                   </span>
                 </button>
 
                 {/* Apply coupon */}
-                <div className="mt-6 border-t border-gray-200 pt-4">
+                <div className="mt-6 border-t border-gray-200 pt-4 dark:border-gray-800">
                   <div className="flex items-center justify-between">
-                    <span className="cursor-pointer text-sm font-semibold text-gray-600 underline">
+                    <span className="cursor-pointer text-sm font-semibold text-gray-600 underline dark:text-gray-400">
                       Apply Coupon
                     </span>
-                    <div className="flex items-center gap-3 text-gray-600">
+                    <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
                       <Gift size={18} />
                       <Share2 size={18} />
                     </div>
@@ -478,31 +478,31 @@ const CourseDetails = () => {
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value)}
                       placeholder="Enter Coupon"
-                      className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#5624d0]"
+                      className="flex-1 rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-[#5624d0] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
                     />
                     <button
                       onClick={handleApplyCoupon}
-                      className="rounded border border-[#5624d0] px-4 text-sm font-bold text-[#5624d0] hover:bg-[#f2edfc]"
+                      className="rounded border border-[#5624d0] px-4 text-sm font-bold text-[#5624d0] hover:bg-[#f2edfc] dark:hover:bg-[#2a1f4d]"
                     >
                       Apply
                     </button>
                   </div>
 
                   {appliedCoupon && (
-                    <div className="mt-3 flex items-center justify-between rounded border border-gray-300 px-3 py-2 text-sm">
-                      <span className="text-[#1c1d1f]">{appliedCoupon}</span>
-                      <span className="flex items-center gap-1 font-semibold text-green-700">
+                    <div className="mt-3 flex items-center justify-between rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700">
+                      <span className="text-[#1c1d1f] dark:text-gray-100">{appliedCoupon}</span>
+                      <span className="flex items-center gap-1 font-semibold text-green-700 dark:text-green-400">
                         <CheckCircle2 size={14} /> Applied!
                       </span>
                     </div>
                   )}
                 </div>
 
-                <div className="mt-6 border-t border-gray-200 pt-4">
+                <div className="mt-6 border-t border-gray-200 pt-4 dark:border-gray-800">
                   <p className="mb-2 text-sm font-semibold">
                     This course includes:
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-700">
+                  <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                     <li className="flex items-center gap-2">
                       <PlayCircle size={16} />
                       {stats.duration} on-demand video

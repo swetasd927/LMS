@@ -2,11 +2,11 @@ const PrivacyPolicy = () => {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-3xl font-bold md:text-4xl">Privacy Policy</h1>
-      <p className="mt-2 text-sm text-gray-500">Last updated: July 2026</p>
+      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Last updated: July 2026</p>
 
-      <div className="mt-10 space-y-8 text-sm leading-relaxed text-gray-700">
+      <div className="mt-10 space-y-8 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
         <section>
-          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f]">
+          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f] dark:text-gray-100">
             1. Information We Collect
           </h2>
           <p>
@@ -19,7 +19,7 @@ const PrivacyPolicy = () => {
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f]">
+          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f] dark:text-gray-100">
             2. How We Use Your Information
           </h2>
           <p>
@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f]">
+          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f] dark:text-gray-100">
             3. Cookies
           </h2>
           <p>
@@ -43,7 +43,7 @@ const PrivacyPolicy = () => {
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f]">
+          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f] dark:text-gray-100">
             4. Data Sharing
           </h2>
           <p>
@@ -55,7 +55,7 @@ const PrivacyPolicy = () => {
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f]">
+          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f] dark:text-gray-100">
             5. Your Rights
           </h2>
           <p>
@@ -66,13 +66,13 @@ const PrivacyPolicy = () => {
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f]">
+          <h2 className="mb-2 text-lg font-bold text-[#1c1d1f] dark:text-gray-100">
             6. Contact
           </h2>
           <p>
             Questions about this policy can be sent to
             support@lms-platform.com, or through our{" "}
-            <a href="/contact-us" className="text-indigo-600 underline">
+            <a href="/contact-us" className="text-indigo-600 underline dark:text-indigo-400">
               Contact Us
             </a>{" "}
             page.

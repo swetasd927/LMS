@@ -31,16 +31,16 @@ const CourseRail = ({ title, subtitle, courses }: CourseRailProps) => {
     <section className="mt-12">
       <div className="mb-4 flex items-end justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[#1c1d1f] sm:text-2xl">
+          <h2 className="text-xl font-bold text-[#1c1d1f] sm:text-2xl dark:text-gray-100">
             {title}
           </h2>
-          {subtitle && <p className="mt-1 text-sm text-gray-500">{subtitle}</p>}
+          {subtitle && <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>}
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
           <Link
             to="/courses"
-            className="hidden items-center gap-1 text-sm font-semibold text-indigo-600 transition-colors hover:text-indigo-800 sm:flex"
+            className="hidden items-center gap-1 text-sm font-semibold text-indigo-600 transition-colors hover:text-indigo-800 sm:flex dark:text-indigo-400 dark:hover:text-indigo-300"
           >
             Browse all <ArrowRight size={14} />
           </Link>
@@ -48,7 +48,7 @@ const CourseRail = ({ title, subtitle, courses }: CourseRailProps) => {
             type="button"
             aria-label="Scroll left"
             onClick={() => scrollByAmount(-1)}
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-600 transition-colors hover:border-indigo-400 hover:text-indigo-600 sm:flex"
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-600 transition-colors hover:border-indigo-400 hover:text-indigo-600 sm:flex dark:border-gray-700 dark:text-gray-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
           >
             <ChevronLeft size={16} />
           </button>
@@ -56,7 +56,7 @@ const CourseRail = ({ title, subtitle, courses }: CourseRailProps) => {
             type="button"
             aria-label="Scroll right"
             onClick={() => scrollByAmount(1)}
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-600 transition-colors hover:border-indigo-400 hover:text-indigo-600 sm:flex"
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-gray-300 text-gray-600 transition-colors hover:border-indigo-400 hover:text-indigo-600 sm:flex dark:border-gray-700 dark:text-gray-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
           >
             <ChevronRight size={16} />
           </button>
@@ -80,7 +80,7 @@ const CourseRail = ({ title, subtitle, courses }: CourseRailProps) => {
 
       <Link
         to="/courses"
-        className="mt-4 flex items-center justify-center gap-1 text-sm font-semibold text-indigo-600 sm:hidden"
+        className="mt-4 flex items-center justify-center gap-1 text-sm font-semibold text-indigo-600 sm:hidden dark:text-indigo-400"
       >
         Browse all courses <ArrowRight size={14} />
       </Link>

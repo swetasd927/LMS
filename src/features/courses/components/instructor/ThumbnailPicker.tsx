@@ -16,7 +16,7 @@ const ThumbnailPicker = ({ value, onChange, category }: ThumbnailPickerProps) =>
 
   return (
     <div>
-      <p className="mb-2 text-sm font-medium text-gray-700">Thumbnail</p>
+      <p className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Thumbnail</p>
       <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
         {sorted.map((asset) => {
           const selected = value === asset.url;
@@ -28,8 +28,8 @@ const ThumbnailPicker = ({ value, onChange, category }: ThumbnailPickerProps) =>
               title={asset.label}
               className={`group relative aspect-video overflow-hidden rounded-lg border-2 transition-all ${
                 selected
-                  ? "border-indigo-600 ring-2 ring-indigo-100"
-                  : "border-transparent hover:border-gray-200"
+                  ? "border-indigo-600 ring-2 ring-indigo-100 dark:ring-indigo-900"
+                  : "border-transparent hover:border-gray-200 dark:hover:border-gray-700"
               }`}
             >
               <img src={asset.url} alt={asset.label} className="h-full w-full object-cover" />

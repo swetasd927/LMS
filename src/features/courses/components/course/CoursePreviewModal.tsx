@@ -40,7 +40,7 @@ const CoursePreviewModal = ({
       width={760}
       destroyOnClose
       closeIcon={
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-800">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-500 shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-800 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-100">
           <X size={16} />
         </span>
       }
@@ -50,23 +50,23 @@ const CoursePreviewModal = ({
       }}
     >
       {/* Header */}
-      <div className="flex items-center gap-2.5 border-b border-gray-100 px-6 py-4">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f2edfc] text-[#5624d0]">
+      <div className="flex items-center gap-2.5 border-b border-gray-100 px-6 py-4 dark:border-gray-800">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f2edfc] text-[#5624d0] dark:bg-[#2a1f4d] dark:text-[#b79bf0]">
           <Sparkles size={16} />
         </span>
         <div className="min-w-0">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
             Course Preview
           </p>
-          <h2 className="truncate text-base font-bold text-[#1c1d1f]">{courseTitle}</h2>
+          <h2 className="truncate text-base font-bold text-[#1c1d1f] dark:text-gray-100">{courseTitle}</h2>
         </div>
       </div>
 
       {/* Video stage */}
       <div className="relative aspect-video w-full bg-[#0b0b0d]">
         {!activeLecture && (
-          <div className="flex h-full flex-col items-center justify-center gap-2 text-gray-500">
-            <PlayCircle size={40} className="text-gray-600" />
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-gray-500 dark:text-gray-400">
+            <PlayCircle size={40} className="text-gray-600 dark:text-gray-500" />
             <p className="text-sm">No preview video is available for this course yet.</p>
           </div>
         )}
@@ -102,12 +102,12 @@ const CoursePreviewModal = ({
 
       {/* Now playing */}
       {activeLecture && (
-        <div className="flex items-start gap-2.5 border-b border-gray-100 px-6 py-4">
-          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f2edfc] text-[#5624d0]">
+        <div className="flex items-start gap-2.5 border-b border-gray-100 px-6 py-4 dark:border-gray-800">
+          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f2edfc] text-[#5624d0] dark:bg-[#2a1f4d] dark:text-[#b79bf0]">
             <Play size={11} className="ml-0.5 fill-current" />
           </span>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-[#1c1d1f]">{activeLecture.title}</p>
+            <p className="truncate text-sm font-semibold text-[#1c1d1f] dark:text-gray-100">{activeLecture.title}</p>
             <p className="truncate text-xs text-gray-400">{activeLecture.sectionTitle}</p>
           </div>
         </div>
@@ -116,9 +116,9 @@ const CoursePreviewModal = ({
       {/* Sample video list */}
       {previewLectures.length > 1 && (
         <div className="max-h-64 overflow-y-auto px-6 py-4">
-          <p className="mb-2.5 flex items-center justify-between text-sm font-semibold text-[#1c1d1f]">
+          <p className="mb-2.5 flex items-center justify-between text-sm font-semibold text-[#1c1d1f] dark:text-gray-100">
             Free Sample Videos
-            <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
+            <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
               {previewLectures.length}
             </span>
           </p>
@@ -133,15 +133,15 @@ const CoursePreviewModal = ({
                     onClick={() => onSelectLecture(lecture.id)}
                     className={`group flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-colors ${
                       isActive
-                        ? "border-[#e4d9fb] bg-[#f8f5fe] text-[#5624d0]"
-                        : "border-transparent text-gray-700 hover:border-gray-100 hover:bg-gray-50"
+                        ? "border-[#e4d9fb] bg-[#f8f5fe] text-[#5624d0] dark:border-[#3d2e70] dark:bg-[#241a45] dark:text-[#b79bf0]"
+                        : "border-transparent text-gray-700 hover:border-gray-100 hover:bg-gray-50 dark:text-gray-300 dark:hover:border-gray-800 dark:hover:bg-gray-800"
                     }`}
                   >
                     <span
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md ${
                         isActive
                           ? "bg-[#5624d0] text-white"
-                          : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"
+                          : "bg-gray-100 text-gray-400 group-hover:bg-gray-200 dark:bg-gray-800 dark:group-hover:bg-gray-700"
                       }`}
                     >
                       {isActive ? (

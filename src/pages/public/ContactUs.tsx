@@ -49,32 +49,32 @@ const ContactUs = () => {
         {/* Contact info */}
         <div className="space-y-6 lg:col-span-1">
           <div className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
               <Mail size={18} />
             </span>
             <div>
-              <p className="font-semibold text-[#1c1d1f]">Email</p>
-              <p className="text-sm text-gray-600">support@lms-platform.com</p>
+              <p className="font-semibold text-[#1c1d1f] dark:text-gray-100">Email</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">support@lms-platform.com</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
               <Phone size={18} />
             </span>
             <div>
-              <p className="font-semibold text-[#1c1d1f]">Phone</p>
-              <p className="text-sm text-gray-600">+977 1-234-5678</p>
+              <p className="font-semibold text-[#1c1d1f] dark:text-gray-100">Phone</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">+977 1-234-5678</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
               <MapPin size={18} />
             </span>
             <div>
-              <p className="font-semibold text-[#1c1d1f]">Office</p>
-              <p className="text-sm text-gray-600">Kathmandu, Nepal</p>
+              <p className="font-semibold text-[#1c1d1f] dark:text-gray-100">Office</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Kathmandu, Nepal</p>
             </div>
           </div>
         </div>
@@ -82,23 +82,23 @@ const ContactUs = () => {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-lg border border-gray-200 p-6 shadow-sm lg:col-span-2"
+          className="space-y-4 rounded-lg border border-gray-200 p-6 shadow-sm lg:col-span-2 dark:border-gray-800"
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Name
               </label>
               <input
                 required
                 value={form.name}
                 onChange={handleChange("name")}
-                className="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#5624d0]"
+                className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-[#5624d0] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
                 placeholder="Your full name"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email
               </label>
               <input
@@ -106,26 +106,26 @@ const ContactUs = () => {
                 type="email"
                 value={form.email}
                 onChange={handleChange("email")}
-                className="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#5624d0]"
+                className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-[#5624d0] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
                 placeholder="you@example.com"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Subject
             </label>
             <input
               value={form.subject}
               onChange={handleChange("subject")}
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#5624d0]"
+              className="w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-[#5624d0] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
               placeholder="What's this about?"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Message
             </label>
             <textarea
@@ -133,7 +133,7 @@ const ContactUs = () => {
               rows={5}
               value={form.message}
               onChange={handleChange("message")}
-              className="w-full resize-none rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#5624d0]"
+              className="w-full resize-none rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-[#5624d0] dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
               placeholder="Tell us how we can help..."
             />
           </div>
@@ -148,12 +148,12 @@ const ContactUs = () => {
           </button>
 
           {status === "success" && (
-            <p className="flex items-center gap-2 text-sm font-medium text-green-700">
+            <p className="flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400">
               <CheckCircle2 size={16} /> {statusMessage}
             </p>
           )}
           {status === "error" && (
-            <p className="text-sm font-medium text-red-600">{statusMessage}</p>
+            <p className="text-sm font-medium text-red-600 dark:text-red-400">{statusMessage}</p>
           )}
         </form>
       </div>

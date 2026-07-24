@@ -15,7 +15,7 @@ const StarRating = ({ rating, size = 14 }: StarRatingProps) => {
           className={
             n <= Math.round(rating)
               ? "fill-[#e59819] text-[#e59819]"
-              : "fill-gray-300 text-gray-300"
+              : "fill-gray-300 text-gray-300 dark:fill-gray-700 dark:text-gray-700"
           }
         />
       ))}

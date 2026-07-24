@@ -67,7 +67,7 @@ const StudentDashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-[#f7f7fb]">
+    <div className="min-h-screen bg-[#f7f7fb] dark:bg-gray-950">
       {/* Hero */}
       <div className="relative overflow-hidden bg-[#0f0e1b]">
         <div className="pointer-events-none absolute inset-0">
@@ -141,13 +141,13 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-[#f7f7fb]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-[#f7f7fb] dark:to-gray-950" />
       </div>
 
       {/* Content */}
       <div className="mx-auto max-w-7xl px-6 pb-20 pt-8 sm:pt-10">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-[#1c1d1f] sm:text-2xl">
+          <h2 className="text-xl font-bold text-[#1c1d1f] dark:text-gray-100 sm:text-2xl">
             Continue learning
           </h2>
         </div>
@@ -157,14 +157,14 @@ const StudentDashboard = () => {
             {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="h-64 animate-pulse rounded-2xl bg-gray-100"
+                className="h-64 animate-pulse rounded-2xl bg-gray-100 dark:bg-gray-800"
               />
             ))}
           </div>
         )}
 
         {!loading && error && (
-          <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-700">
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-400">
             {error}
           </div>
         )}
@@ -174,15 +174,15 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-3xl border border-dashed border-gray-300 bg-white p-16 text-center"
+            className="relative overflow-hidden rounded-3xl border border-dashed border-gray-300 bg-white p-16 text-center dark:border-gray-700 dark:bg-gray-900"
           >
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-500">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-500 dark:bg-indigo-950/50 dark:text-indigo-400">
               <Compass size={28} />
             </div>
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
               You haven't enrolled in any courses yet
             </h2>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
               Browse the catalog and start learning something new today.
             </p>
             <Link

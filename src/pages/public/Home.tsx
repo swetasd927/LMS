@@ -30,13 +30,13 @@ const Home = () => {
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="h-64 animate-pulse rounded-lg bg-gray-100"
+                  className="h-64 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800"
                 />
               ))}
             </div>
           )}
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
           {!loading && !error && (
             <motion.div

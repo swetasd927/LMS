@@ -83,10 +83,10 @@ const ContinueLearningCard = ({
       layout
       whileHover={{ y: -6 }}
       transition={hoverLiftTransition}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm shadow-gray-200/60 transition-shadow hover:shadow-xl hover:shadow-indigo-200/50"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm shadow-gray-200/60 transition-shadow hover:shadow-xl hover:shadow-indigo-200/50 dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
     >
       {/* Thumbnail + gradient progress overlay */}
-      <div className="relative h-36 w-full overflow-hidden bg-slate-200">
+      <div className="relative h-36 w-full overflow-hidden bg-slate-200 dark:bg-gray-800">
         <img
           src={item.course.thumbnail}
           alt={item.course.title}
@@ -108,18 +108,18 @@ const ContinueLearningCard = ({
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs text-gray-500">{item.course.instructor.name}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">{item.course.instructor.name}</p>
 
         <div className="mt-3">
-          <div className="mb-1.5 flex items-center justify-between text-xs text-gray-500">
+          <div className="mb-1.5 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>
               {item.completedCount}/{item.totalLectures} lectures
             </span>
-            <span className="font-semibold text-indigo-600">
+            <span className="font-semibold text-indigo-600 dark:text-indigo-400">
               {item.progressPercent === 100 ? "Completed" : "In progress"}
             </span>
           </div>
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${item.progressPercent}%` }}
@@ -147,7 +147,7 @@ const ContinueLearningCard = ({
 
           <Link
             to={`/course/${item.course.id}`}
-            className="flex items-center gap-1.5 rounded-full border border-gray-300 px-4 py-2 text-xs font-bold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+            className="flex items-center gap-1.5 rounded-full border border-gray-300 px-4 py-2 text-xs font-bold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-800"
           >
             Course details
           </Link>
@@ -163,7 +163,7 @@ const ContinueLearningCard = ({
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="overflow-hidden"
             >
-              <div className="mt-4 border-t border-gray-100 pt-3">
+              <div className="mt-4 border-t border-gray-100 pt-3 dark:border-gray-800">
                 {item.course.days.map((day, dayIndex) => {
                   const dayOpen = openDayIndex === dayIndex;
                   return (
@@ -173,7 +173,7 @@ const ContinueLearningCard = ({
                         onClick={() =>
                           setOpenDayIndex(dayOpen ? -1 : dayIndex)
                         }
-                        className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-50"
+                        className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-800"
                       >
                         <span>
                           Day {day.dayNumber}: {day.title}
@@ -209,23 +209,23 @@ const ContinueLearningCard = ({
                                     onClick={() =>
                                       onToggleLecture(lecture.id)
                                     }
-                                    className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                                    className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:text-gray-300 dark:hover:bg-gray-800"
                                   >
                                     {isDone ? (
                                       <CheckCircle2
                                         size={16}
-                                        className="shrink-0 text-emerald-600"
+                                        className="shrink-0 text-emerald-600 dark:text-emerald-500"
                                       />
                                     ) : (
                                       <Circle
                                         size={16}
-                                        className="shrink-0 text-gray-300"
+                                        className="shrink-0 text-gray-300 dark:text-gray-600"
                                       />
                                     )}
                                     <span
                                       className={
                                         isDone
-                                          ? "text-gray-400 line-through"
+                                          ? "text-gray-400 line-through dark:text-gray-500"
                                           : ""
                                       }
                                     >
